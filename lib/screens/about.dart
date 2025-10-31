@@ -8,7 +8,10 @@ class AboutScreen extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: const [
-        Text('О магазине «Атлантида»', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800)),
+        Text(
+          'О магазине «Атлантида»',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+        ),
         SizedBox(height: 8),
         Text(
           'Зоомагазин в Нижнем Новгороде. Большой выбор аквариумов, '

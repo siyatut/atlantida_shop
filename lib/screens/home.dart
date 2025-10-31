@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../screens/catalog.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -16,7 +17,7 @@ class HomeScreen extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          _HeroBanner(
+          const _HeroBanner(
             title: 'Категории',
             subtitle: 'Выберите раздел магазина',
           ),
@@ -36,9 +37,11 @@ class HomeScreen extends StatelessWidget {
                 return _CategoryCard(
                   data: item,
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => CatalogScreen(initialFilter: item.slug),
-                    ));
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => CatalogScreen(initialFilter: item.slug),
+                      ),
+                    );
                   },
                 );
               },
@@ -63,7 +66,10 @@ class _HeroBanner extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [cs.primaryContainer.withOpacity(.25), cs.primary.withOpacity(.35)],
+          colors: [
+            cs.primaryContainer.withValues(alpha: .25),
+            cs.primary.withValues(alpha: .35),
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -72,9 +78,19 @@ class _HeroBanner extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
+          Text(
+            title,
+            style: Theme.of(
+              context,
+            ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
+          ),
           const SizedBox(height: 6),
-          Text(subtitle, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white70)),
+          Text(
+            subtitle,
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: Colors.white70),
+          ),
         ],
       ),
     );
@@ -101,16 +117,22 @@ class _CategoryCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(16),
       child: Ink(
         decoration: BoxDecoration(
-          color: cs.surfaceVariant.withOpacity(.25),
+          color: cs.surfaceContainerHighest.withValues(alpha: .25),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: Colors.white10),
         ),
         child: Center(
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Icon(data.icon, size: 42),
-            const SizedBox(height: 8),
-            Text(data.title, style: const TextStyle(fontWeight: FontWeight.w700)),
-          ]),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(data.icon, size: 42),
+              const SizedBox(height: 8),
+              Text(
+                data.title,
+                style: const TextStyle(fontWeight: FontWeight.w700),
+              ),
+            ],
+          ),
         ),
       ),
     );

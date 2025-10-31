@@ -38,8 +38,12 @@ class _CatalogScreenState extends State<CatalogScreen> {
           child: ListView.separated(
             padding: const EdgeInsets.all(16),
             itemBuilder: (_, i) => ListTile(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              tileColor: Theme.of(context).colorScheme.surfaceVariant.withOpacity(.2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              tileColor: Theme.of(
+                context,
+              ).colorScheme.surfaceContainerHighest.withValues(alpha: .2),
               title: Text(products[i].$1),
               trailing: const Icon(Icons.chevron_right),
               onTap: () {}, // TODO: переход на детали товара
@@ -63,12 +67,18 @@ class _Filters extends StatelessWidget {
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
       scrollDirection: Axis.horizontal,
-      child: Row(children: [
-        _Chip('Все', active == null, () => onSelect(null)),
-        _Chip('Оборудование', active == 'equipment', () => onSelect('equipment')),
-        _Chip('Корм', active == 'food', () => onSelect('food')),
-        _Chip('Рыбки', active == 'fish', () => onSelect('fish')),
-      ]),
+      child: Row(
+        children: [
+          _Chip('Все', active == null, () => onSelect(null)),
+          _Chip(
+            'Оборудование',
+            active == 'equipment',
+            () => onSelect('equipment'),
+          ),
+          _Chip('Корм', active == 'food', () => onSelect('food')),
+          _Chip('Рыбки', active == 'fish', () => onSelect('fish')),
+        ],
+      ),
     );
   }
 }
@@ -93,7 +103,7 @@ class _Chip extends StatelessWidget {
           color: selected ? cs.onPrimary : null,
         ),
         selectedColor: cs.primary,
-        backgroundColor: cs.surfaceVariant.withOpacity(.25),
+        backgroundColor: cs.surfaceContainerHighest.withValues(alpha: .25),
       ),
     );
   }
