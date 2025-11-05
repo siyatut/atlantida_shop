@@ -1,3 +1,4 @@
+import 'package:atlantida_shop/core/env.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/about.dart';
@@ -5,7 +6,11 @@ import 'screens/catalog.dart';
 import 'screens/contacts.dart';
 import 'screens/home.dart';
 
-void main() => runApp(const AtlantidaApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Env.load();
+  runApp(const AtlantidaApp());
+}
 
 class AtlantidaApp extends StatelessWidget {
   const AtlantidaApp({super.key});
