@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../data/woo/woo_repository.dart';
+import '../data/woo/woo_models.dart';
 import '../domain/product.dart';
 // import 'product_details.dart';
 
 class CatalogScreen extends StatefulWidget {
   const CatalogScreen({super.key, this.initialFilter});
-  final String? initialFilter; // 'equipment' | 'food' | 'fish'
+  final String? initialFilter; 
   @override
   State<CatalogScreen> createState() => _CatalogScreenState();
 }
@@ -18,11 +19,46 @@ class _CatalogScreenState extends State<CatalogScreen> {
   String? _error;
   List<Product> _items = const [];
 
+  bool _catsLoading = true;
+  List<WooCategory> _cats = const [];
+  final Map<String, int> _slugToId = {}; // slug -> id
+
   @override
   void initState() {
     super.initState();
     _activeFilter = widget.initialFilter;
-    _load();
+    _loadCategories().then((_) => _load());
+  }
+
+  Future<void> _loadCategories() async {
+    setState(() => _catsLoading = true);
+    try {
+      final cats = await _repo.categories(perPage: 100);
+      // Оставим только те, что видим в макете:
+      const desired = {
+        'gryzuny': 'Грызуны',
+        'koshki': 'Кошки',
+        'pticy': 'Птицы', // иногда slug может быть pticy/ptitsy
+        'ptitsy': 'Птицы',
+        'rybki': 'Рыбки',
+        'sobaki': 'Собаки',
+      };
+      final filtered = <WooCategory>[];
+      for (final c in cats) {
+        if (desired.keys.contains(c.slug)) {
+          filtered.add(c);
+          _slugToId[c.slug] = c.id;
+        }
+      }
+      setState(() {
+        _cats = filtered;
+      });
+    } catch (e) {
+      // ignore: avoid_print
+      print('Failed to load categories: $e');
+    } finally {
+      setState(() => _catsLoading = false);
+    }
   }
 
   Future<void> _load() async {
@@ -31,7 +67,8 @@ class _CatalogScreenState extends State<CatalogScreen> {
       _error = null;
     });
     try {
-      final data = await _repo.products();
+      final id = _activeFilter == null ? null : _slugToId[_activeFilter!];
+      final data = await _repo.products(perPage: 100, categoryId: id);
       setState(() => _items = data);
     } catch (e) {
       setState(() => _error = e.toString());
@@ -42,15 +79,17 @@ class _CatalogScreenState extends State<CatalogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final products = _items
-        .where((p) => _activeFilter == null || p.category == _activeFilter)
-        .toList();
-
+    final products = _items;
     return Column(
       children: [
-        _Filters(
-          active: _activeFilter,
-          onSelect: (f) => setState(() => _activeFilter = f),
+        _DynamicFilters(
+          loading: _catsLoading,
+          categories: _cats,
+          activeSlug: _activeFilter,
+          onSelect: (slug) {
+            setState(() => _activeFilter = slug);
+            _load();
+          },
         ),
         if (_loading)
           const Expanded(child: Center(child: CircularProgressIndicator())),
@@ -118,46 +157,69 @@ class _CatalogScreenState extends State<CatalogScreen> {
   }
 }
 
-class _Filters extends StatelessWidget {
-  const _Filters({required this.active, required this.onSelect});
-  final String? active;
+class _DynamicFilters extends StatelessWidget {
+  const _DynamicFilters({
+    required this.loading,
+    required this.categories,
+    required this.activeSlug,
+    required this.onSelect,
+  });
+
+  final bool loading;
+  final List<WooCategory> categories;
+  final String? activeSlug;
   final ValueChanged<String?> onSelect;
 
   @override
   Widget build(BuildContext context) {
+    
+    if (loading) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 12),
+        child: LinearProgressIndicator(minHeight: 2),
+      );
+    }
+
+    final chips = <Widget>[
+      _chip(
+        context,
+        label: 'Все',
+        selected: activeSlug == null,
+        onTap: () => onSelect(null),
+      ),
+    ];
+
+    final sorted = [...categories]..sort((a, b) => a.name.compareTo(b.name));
+    for (final c in sorted) {
+      chips.add(
+        _chip(
+          context,
+          label: c.name,
+          selected: activeSlug == c.slug,
+          onTap: () => onSelect(c.slug),
+        ),
+      );
+    }
+
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
       scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          _Chip('Все', active == null, () => onSelect(null)),
-          _Chip(
-            'Оборудование',
-            active == 'equipment',
-            () => onSelect('equipment'),
-          ),
-          _Chip('Корм', active == 'food', () => onSelect('food')),
-          _Chip('Рыбки', active == 'fish', () => onSelect('fish')),
-        ],
-      ),
+      child: Row(children: chips),
     );
   }
-}
 
-class _Chip extends StatelessWidget {
-  const _Chip(this.text, this.selected, this.onTap);
-  final String text;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _chip(
+    BuildContext context, {
+    required String label,
+    required bool selected,
+    required VoidCallback onTap,
+  }) {
     final cs = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.only(right: 8),
       child: ChoiceChip(
         selected: selected,
-        label: Text(text),
+        label: Text(label),
         onSelected: (_) => onTap(),
         labelStyle: TextStyle(
           fontWeight: FontWeight.w700,

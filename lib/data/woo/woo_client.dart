@@ -38,4 +38,18 @@ class WooClient {
     }
     throw Exception('Woo API error ${res.statusCode}: ${res.body}');
   }
+
+    Future<List<dynamic>> getCategories({int perPage = 100, int page = 1, int? parent}) async {
+    final uri = _uri('products/categories', {
+      'per_page': perPage,
+      'page': page,
+      if (parent != null) 'parent': parent,
+      'hide_empty': true,
+    });
+    final res = await _http.get(uri, headers: _authHeader);
+    if (res.statusCode >= 200 && res.statusCode < 300) {
+      return jsonDecode(res.body) as List<dynamic>;
+    }
+    throw Exception('Woo API error ${res.statusCode}: ${res.body}');
+  }
 }
