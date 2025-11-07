@@ -5,6 +5,8 @@ import '../data/woo/woo_models.dart';
 import '../domain/product.dart';
 import 'product_details.dart';
 
+import 'package:cached_network_image/cached_network_image.dart';
+
 class CatalogScreen extends StatefulWidget {
   const CatalogScreen({super.key, this.initialFilter});
   final String? initialFilter;
@@ -142,58 +144,62 @@ class _CatalogScreenState extends State<CatalogScreen> {
             child: RefreshIndicator(
               onRefresh: () => _load(reset: true),
 
-             
-          child: ListView.separated(
+              child: ListView.separated(
                 padding: const EdgeInsets.all(16),
-               itemBuilder: (_, i) {
+                itemBuilder: (_, i) {
                   // последний элемент — футер «Показать ещё»
                   if (i == products.length) {
                     return _LoadMoreFooter(
                       visible: _hasMore,
                       loading: _loadingMore,
                       onTap: () => _load(reset: false),
-                   );
+                    );
                   }
                   final item = products[i];
                   return _Card(
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _ProductThumb(url: item.image),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          flex: 1,
+                          child: _ProductImage(url: item.image),
+                        ),
                         const SizedBox(width: 12),
                         Expanded(
+                          flex: 1,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 item.title,
-                                maxLines: 2,
-                               overflow: TextOverflow.ellipsis,
+                               // maxLines: 2,
+                              //  overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w800,
-                                 fontSize: 16,
-                               ),
-                              ),
-                             const SizedBox(height: 6),
-                              _PriceText(price: item.price),
-                              const SizedBox(height: 10),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: _YellowButton(
-                                  text: 'Подробнее',
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (_) =>
-                                            ProductDetailsScreen(product: item),
-                                      ),
-                                    );
-                                  },
+                                  fontSize: 17,
+                                  color: Color(
+                                    0xFF17324A,
+                                  ),
                                 ),
+                              ),
+                              const SizedBox(height: 8),
+                              _PriceText(price: item.price),
+                              const SizedBox(height: 12),
+                              _YellowButton(
+                                text: 'Подробнее',
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          ProductDetailsScreen(product: item),
+                                    ),
+                                  );
+                                },
                               ),
                             ],
                           ),
                         ),
+                        const SizedBox(width: 8),
                       ],
                     ),
                   );
@@ -249,44 +255,52 @@ class _Card extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .96),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: .25),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
+            color: Colors.black.withValues(alpha: .20),
+            blurRadius: 14,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(14),
       child: child,
     );
   }
 }
 
-class _ProductThumb extends StatelessWidget {
-  const _ProductThumb({this.url});
+class _ProductImage extends StatelessWidget {
+  const _ProductImage({this.url});
   final String? url;
-
   @override
   Widget build(BuildContext context) {
-    final radius = 36.0;
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(radius),
-      child: url != null && url!.isNotEmpty
-          ? Image.network(
-              url!,
-              width: radius * 2,
-              height: radius * 2,
-              fit: BoxFit.cover,
-            )
-          : Container(
-              width: radius * 2,
-              height: radius * 2,
-              color: Colors.grey.shade300,
-              child: const Icon(Icons.image_not_supported_outlined),
-            ),
+    return AspectRatio(
+      aspectRatio: 1,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          color: Colors.grey.shade200,
+          child: (url == null || url!.isEmpty)
+              ? const Icon(Icons.image_outlined, color: Colors.black26)
+              : CachedNetworkImage(
+                  imageUrl: url!,
+                  fit: BoxFit.cover,
+                  placeholder: (_, __) => const Center(
+                    child: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  ),
+                  errorWidget: (_, __, ___) => const Icon(
+                    Icons.broken_image_outlined,
+                    color: Colors.black26,
+                  ),
+                ),
+        ),
+      ),
     );
   }
 }
@@ -304,12 +318,12 @@ class _YellowButton extends StatelessWidget {
         elevation: 0,
         backgroundColor: const Color(0xFFF6C445),
         foregroundColor: const Color(0xFF132B45),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
       child: Text(
         text,
-        style: const TextStyle(fontWeight: FontWeight.w800),
+        style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
       ),
     );
   }
@@ -325,13 +339,13 @@ class _PriceText extends StatelessWidget {
     return Text(
       hasPrice ? '$price руб.' : 'Цена по запросу',
       style: TextStyle(
-        color: hasPrice ? Colors.black87 : Colors.grey.shade700,
-        fontWeight: FontWeight.w600,
+        color: hasPrice ? const Color(0xFF0E3A69) : Colors.black54,
+        fontWeight: FontWeight.w700,
+        fontSize: 15,
       ),
     );
   }
 }
-
 
 class _DynamicFilters extends StatelessWidget {
   const _DynamicFilters({

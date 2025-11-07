@@ -1,5 +1,6 @@
 import 'package:atlantida_shop/core/env.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'screens/about.dart';
 import 'screens/catalog.dart';
@@ -27,8 +28,19 @@ class AtlantidaApp extends StatelessWidget {
           seedColor: seed,
           brightness: Brightness.dark,
         ),
-        scaffoldBackgroundColor: const Color(0xFF061A2E),
-        appBarTheme: const AppBarTheme(centerTitle: true),
+        scaffoldBackgroundColor: const Color(0xFF08233A),
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+          backgroundColor: Color(0xFF08233A),
+          surfaceTintColor: Colors.transparent,
+          foregroundColor: Colors.white,
+          systemOverlayStyle: SystemUiOverlayStyle.light, 
+        ),
+        navigationBarTheme: const NavigationBarThemeData(
+          backgroundColor: Color(0xFF08233A),
+          indicatorColor: Color(0xFF0E3A69), // мягкий подсвет индикатора
+          surfaceTintColor: Colors.transparent,
+        ),
       ),
       home: const _RootTabs(),
     );
