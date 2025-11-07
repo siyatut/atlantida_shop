@@ -40,7 +40,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
   Future<void> _loadCategories() async {
     setState(() => _catsLoading = true);
     try {
-      final cats = await _repo.categories(perPage: 100);
+      final cats = await _repo.categories();
       // Оставим только те, что видим в макете:
       const desired = {
         'gryzuny': 'Грызуны',
@@ -96,11 +96,12 @@ class _CatalogScreenState extends State<CatalogScreen> {
     } catch (e) {
       setState(() => _error = e.toString());
     } finally {
-      if (!mounted) return;
-      if (reset) {
-        setState(() => _loading = false);
-      } else {
-        setState(() => _loadingMore = false);
+      if (mounted) {
+        if (reset) {
+          setState(() => _loading = false);
+        } else {
+          setState(() => _loadingMore = false);
+        }
       }
     }
   }
@@ -152,7 +153,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                     return _LoadMoreFooter(
                       visible: _hasMore,
                       loading: _loadingMore,
-                      onTap: () => _load(reset: false),
+                      onTap: () => _load(),
                     );
                   }
                   final item = products[i];
@@ -160,26 +161,20 @@ class _CatalogScreenState extends State<CatalogScreen> {
                     child: Row(
                       children: [
                         const SizedBox(width: 6),
-                        Expanded(
-                          flex: 1,
-                          child: _ProductImage(url: item.image),
-                        ),
+                        Expanded(child: _ProductImage(url: item.image)),
                         const SizedBox(width: 12),
                         Expanded(
-                          flex: 1,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 item.title,
-                               // maxLines: 2,
-                              //  overflow: TextOverflow.ellipsis,
+                                // maxLines: 2,
+                                //  overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.w800,
                                   fontSize: 17,
-                                  color: Color(
-                                    0xFF17324A,
-                                  ),
+                                  color: Color(0xFF17324A),
                                 ),
                               ),
                               const SizedBox(height: 8),
