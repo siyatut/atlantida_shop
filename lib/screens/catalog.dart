@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../data/woo/woo_repository.dart';
 import '../data/woo/woo_models.dart';
 import '../domain/product.dart';
-// import 'product_details.dart';
+import 'product_details.dart';
 
 class CatalogScreen extends StatefulWidget {
   const CatalogScreen({super.key, this.initialFilter});
@@ -141,50 +141,65 @@ class _CatalogScreenState extends State<CatalogScreen> {
           Expanded(
             child: RefreshIndicator(
               onRefresh: () => _load(reset: true),
-              child: ListView.separated(
+
+             
+          child: ListView.separated(
                 padding: const EdgeInsets.all(16),
-                itemBuilder: (_, i) {
-                  // последний элемент — это футер «Показать ещё»
+               itemBuilder: (_, i) {
+                  // последний элемент — футер «Показать ещё»
                   if (i == products.length) {
                     return _LoadMoreFooter(
                       visible: _hasMore,
                       loading: _loadingMore,
                       onTap: () => _load(reset: false),
-                    );
+                   );
                   }
                   final item = products[i];
-                  return ListTile(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    tileColor: Theme.of(
-                      context,
-                    ).colorScheme.surfaceContainerHighest.withValues(alpha: .2),
-                    leading: (item.image != null)
-                        ? CircleAvatar(
-                            backgroundImage: NetworkImage(item.image!),
-                          )
-                        : const CircleAvatar(
-                            child: Icon(Icons.image_not_supported_outlined),
+                  return _Card(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _ProductThumb(url: item.image),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                item.title,
+                                maxLines: 2,
+                               overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                 fontSize: 16,
+                               ),
+                              ),
+                             const SizedBox(height: 6),
+                              _PriceText(price: item.price),
+                              const SizedBox(height: 10),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: _YellowButton(
+                                  text: 'Подробнее',
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) =>
+                                            ProductDetailsScreen(product: item),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
-                    title: Text(item.title),
-                    subtitle: Text(
-                      (item.price != null && item.price!.isNotEmpty)
-                          ? '${item.price} руб.'
-                          : 'Цена по запросу',
+                        ),
+                      ],
                     ),
-                    trailing: const Icon(Icons.chevron_right),
-                    // onTap: () {
-                    //   Navigator.of(context).push(
-                    //     MaterialPageRoute(
-                    //       builder: (_) => ProductDetailsScreen(product: item),
-                    //     ),
-                    //   );
-                    // },
                   );
                 },
                 separatorBuilder: (_, i) => i < products.length - 1
-                    ? const SizedBox(height: 8)
+                    ? const SizedBox(height: 12)
                     : const SizedBox.shrink(),
                 itemCount: products.length + 1, // +1 под футер
               ),
@@ -225,6 +240,98 @@ class _LoadMoreFooter extends StatelessWidget {
     );
   }
 }
+
+class _Card extends StatelessWidget {
+  const _Card({required this.child});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: .96),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: .25),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.all(12),
+      child: child,
+    );
+  }
+}
+
+class _ProductThumb extends StatelessWidget {
+  const _ProductThumb({this.url});
+  final String? url;
+
+  @override
+  Widget build(BuildContext context) {
+    final radius = 36.0;
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(radius),
+      child: url != null && url!.isNotEmpty
+          ? Image.network(
+              url!,
+              width: radius * 2,
+              height: radius * 2,
+              fit: BoxFit.cover,
+            )
+          : Container(
+              width: radius * 2,
+              height: radius * 2,
+              color: Colors.grey.shade300,
+              child: const Icon(Icons.image_not_supported_outlined),
+            ),
+    );
+  }
+}
+
+class _YellowButton extends StatelessWidget {
+  const _YellowButton({required this.text, required this.onTap});
+  final String text;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onTap,
+      style: ElevatedButton.styleFrom(
+        elevation: 0,
+        backgroundColor: const Color(0xFFF6C445),
+        foregroundColor: const Color(0xFF132B45),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      child: Text(
+        text,
+        style: const TextStyle(fontWeight: FontWeight.w800),
+      ),
+    );
+  }
+}
+
+class _PriceText extends StatelessWidget {
+  const _PriceText({this.price});
+  final String? price;
+
+  @override
+  Widget build(BuildContext context) {
+    final hasPrice = price != null && price!.isNotEmpty;
+    return Text(
+      hasPrice ? '$price руб.' : 'Цена по запросу',
+      style: TextStyle(
+        color: hasPrice ? Colors.black87 : Colors.grey.shade700,
+        fontWeight: FontWeight.w600,
+      ),
+    );
+  }
+}
+
 
 class _DynamicFilters extends StatelessWidget {
   const _DynamicFilters({
