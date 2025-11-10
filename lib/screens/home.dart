@@ -21,7 +21,9 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(height: 6),
                   Text(
                     '9 лет опыта. 3 000+ наименований.\nЛюбовь к питомцам начинается здесь.',
-                    style: TextStyle(color: cs.onSurface.withValues(alpha: .85)),
+                    style: TextStyle(
+                      color: cs.onSurface.withValues(alpha: .85),
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Row(
@@ -29,17 +31,43 @@ class HomeScreen extends StatelessWidget {
                       Expanded(
                         child: _YellowButton(
                           text: 'Позвонить',
-                         onTap: () => launchUrl(Uri.parse('tel:+79625046096')),
+                          onTap: () async {
+                            final uri = Uri(
+                              scheme: 'tel',
+                              path: '+79625046096',
+                            );
+                            if (await canLaunchUrl(uri)) {
+                              await launchUrl(
+                                uri,
+                                mode: LaunchMode.externalApplication,
+                              );
+                            }
+                          },
                         ),
                       ),
                       const SizedBox(width: 12),
-                     Expanded(
+                      Expanded(
                         child: _YellowButton(
                           text: 'Написать',
-                          onTap: () => launchUrl(Uri.parse('mailto: gagin645@yandex.ru')),
+                          onTap: () async {
+                            final uri = Uri(
+                              scheme: 'mailto',
+                              path: 'gagin645@yandex.ru',
+                              queryParameters: {
+                                'subject': 'Вопрос по товару из приложения',
+                                'body': 'Здравствуйте! Хочу уточнить…',
+                              },
+                            );
+                            if (await canLaunchUrl(uri)) {
+                              await launchUrl(
+                                uri,
+                                mode: LaunchMode.externalApplication,
+                              );
+                            }
+                          },
                         ),
                       ),
-                    ],
+                    ], 
                   ),
                 ],
               ),
@@ -144,18 +172,13 @@ class _HeroBannerLarge extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(18),
         child: Container(
-         height: 220,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.white10),
-          ),
-         child: Stack(
+          height: 220,
+          decoration: BoxDecoration(border: Border.all(color: Colors.white10)),
+          child: Stack(
             fit: StackFit.expand,
             children: [
               // Фон-картинка
-              Image.asset(
-                'assets/images/home_banner.jpg',
-                fit: BoxFit.cover,
-              ),
+              Image.asset('assets/images/home_banner.jpg', fit: BoxFit.cover),
               // Затемняющий градиент слева → вправо
               DecoratedBox(
                 decoration: BoxDecoration(
@@ -174,8 +197,8 @@ class _HeroBannerLarge extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: ConstrainedBox(
-                   constraints: const BoxConstraints(maxWidth: 280),
-                   child: const Column(
+                    constraints: const BoxConstraints(maxWidth: 280),
+                    child: const Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -218,8 +241,8 @@ class _HeroLine extends StatelessWidget {
             Shadow(blurRadius: 8, color: Colors.black54, offset: Offset(0, 2)),
           ],
         ),
-        ),
-      );
+      ),
+    );
   }
 }
 
