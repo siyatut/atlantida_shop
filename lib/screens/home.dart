@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../utils/launcher_utils.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -31,40 +32,18 @@ class HomeScreen extends StatelessWidget {
                       Expanded(
                         child: _YellowButton(
                           text: 'Позвонить',
-                          onTap: () async {
-                            final uri = Uri(
-                              scheme: 'tel',
-                              path: '+79625046096',
-                            );
-                            if (await canLaunchUrl(uri)) {
-                              await launchUrl(
-                                uri,
-                                mode: LaunchMode.externalApplication,
-                              );
-                            }
-                          },
+                          onTap: () => makePhoneCall('+79625046096'),
                         ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: _YellowButton(
                           text: 'Написать',
-                          onTap: () async {
-                            final uri = Uri(
-                              scheme: 'mailto',
-                              path: 'gagin645@yandex.ru',
-                              queryParameters: {
-                                'subject': 'Вопрос по товару из приложения',
-                                'body': 'Здравствуйте! Хочу уточнить…',
-                              },
-                            );
-                            if (await canLaunchUrl(uri)) {
-                              await launchUrl(
-                                uri,
-                                mode: LaunchMode.externalApplication,
-                              );
-                            }
-                          },
+                          onTap: () => sendEmail(
+                            email: 'gagin645@yandex.ru',
+                            subject: 'Вопрос по товару из приложения',
+                            body: 'Здравствуйте! Хочу уточнить детали…',
+                          ),
                         ),
                       ),
                     ], 
