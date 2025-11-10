@@ -17,28 +17,27 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const _SectionTitle('Магазин зоотоваров в Нижнем Новгороде.'),
+                  const _SectionTitle('Зоомагазин в Нижнем Новгороде'),
                   const SizedBox(height: 6),
                   Text(
-                    '9 лет опыта, более 3 000 наименований.\n'
-                    'Любовь к питомцам начинается здесь.',
-                    style: TextStyle(
-                      color: cs.onSurface.withValues(alpha: .85),
-                    ),
+                    '9 лет опыта. 3 000+ наименований.\nЛюбовь к питомцам начинается здесь.',
+                    style: TextStyle(color: cs.onSurface.withValues(alpha: .85)),
                   ),
-                  const SizedBox(height: 12),
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 8,
+                  const SizedBox(height: 16),
+                  Row(
                     children: [
-                      _YellowButton(
-                        text: 'Позвонить',
-                        onTap: () => launchUrl(Uri.parse('tel:+79625046096')),
+                      Expanded(
+                        child: _YellowButton(
+                          text: 'Позвонить',
+                         onTap: () => launchUrl(Uri.parse('tel:+79625046096')),
+                        ),
                       ),
-                      _YellowButton(
-                        text: 'Написать',
-                        onTap: () =>
-                            launchUrl(Uri.parse('mailto:rnti43@yandex.ru')),
+                      const SizedBox(width: 12),
+                     Expanded(
+                        child: _YellowButton(
+                          text: 'Написать',
+                          onTap: () => launchUrl(Uri.parse('mailto: gagin645@yandex.ru')),
+                        ),
                       ),
                     ],
                   ),
