@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
     return SafeArea(
       child: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(child: _HeroBannerLarge()),
+          const SliverToBoxAdapter(child: _HeroBannerLarge()),
           SliverToBoxAdapter(child: _gap16()),
           SliverToBoxAdapter(
             child: _SurfaceCard(
@@ -136,58 +136,63 @@ class HomeScreen extends StatelessWidget {
 }
 
 class _HeroBannerLarge extends StatelessWidget {
+  const _HeroBannerLarge();
+
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              cs.primaryContainer.withValues(alpha: .20),
-              cs.primary.withValues(alpha: .25),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(18),
+        child: Container(
+         height: 220,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white10),
           ),
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: Colors.white10),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Текстовая колонка
-            const Expanded(
-              flex: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _HeroLine('ЗООТОВАРЫ'),
-                  _HeroLine('АКВАРИУМЫ'),
-                  _HeroLine('ОБОРУДОВАНИЕ'),
-                  _HeroLine('КОРМА ДЛЯ ВАШИХ'),
-                  _HeroLine('ДОМАШНИХ ЛЮБИМЦЕВ'),
-                  _HeroLine('И ДРУГИЕ'),
-                  _HeroLine('СОПУТСТВУЮЩИЕ ТОВАРЫ'),
-                ],
+         child: Stack(
+            fit: StackFit.expand,
+            children: [
+              // Фон-картинка
+              Image.asset(
+                'assets/images/home_banner.jpg',
+                fit: BoxFit.cover,
               ),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: Image.asset(
-                   'assets/images/home_banner.jpg',
-                    fit: BoxFit.cover,
+              // Затемняющий градиент слева → вправо
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.black.withValues(alpha: .60),
+                      Colors.black.withValues(alpha: .20),
+                      Colors.black.withValues(alpha: .05),
+                    ],
                   ),
                 ),
               ),
-            ),
-          ],
+              // Текст поверх фото
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: ConstrainedBox(
+                   constraints: const BoxConstraints(maxWidth: 280),
+                   child: const Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _HeroLine('ЗООТОВАРЫ'),
+                        _HeroLine('АКВАРИУМЫ'),
+                        _HeroLine('ОБОРУДОВАНИЕ'),
+                        _HeroLine('КОРМА ДЛЯ ВАШИХ'),
+                        _HeroLine('ДОМАШНИХ ЛЮБИМЦЕВ'),
+                        _HeroLine('И ДРУГИЕ ТОВАРЫ'),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -201,15 +206,21 @@ class _HeroLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
+      padding: const EdgeInsets.symmetric(vertical: 1),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(
           fontWeight: FontWeight.w900,
+          fontSize: 16,
+          height: 1.15,
           letterSpacing: .2,
+          color: Colors.white,
+          shadows: const [
+            Shadow(blurRadius: 8, color: Colors.black54, offset: Offset(0, 2)),
+          ],
         ),
-      ),
-    );
+        ),
+      );
   }
 }
 
