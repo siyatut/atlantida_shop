@@ -105,10 +105,6 @@ class _RootTabsState extends State<_RootTabs> {
       behavior: HitTestBehavior.opaque,
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        // важные флаги: фон тянется и под верх/низ
-        extendBody: true,
-        extendBodyBehindAppBar: true,
-
         appBar: AppBar(
           title: Text(
             switch (_index) {
