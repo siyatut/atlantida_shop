@@ -1,13 +1,12 @@
+import 'package:atlantida_shop/core/env.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:atlantida_shop/core/env.dart';
-import 'theme/app_colors.dart';
-
-import 'screens/home.dart';
-import 'screens/catalog.dart';
 import 'screens/about.dart';
+import 'screens/catalog.dart';
 import 'screens/contacts.dart';
+import 'screens/home.dart';
+import 'theme/app_colors.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +35,8 @@ class AtlantidaApp extends StatelessWidget {
           surfaceTintColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
-          systemOverlayStyle: SystemUiOverlayStyle.dark, // тёмные иконки в статус-баре
+          systemOverlayStyle:
+              SystemUiOverlayStyle.dark, // тёмные иконки в статус-баре
           titleTextStyle: TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 20,
@@ -47,15 +47,19 @@ class AtlantidaApp extends StatelessWidget {
         navigationBarTheme: NavigationBarThemeData(
           height: 72,
           elevation: 0,
-          backgroundColor: Colors.transparent,            // низ прозрачен — под ним тот же градиент
+          backgroundColor:
+              Colors.transparent, // низ прозрачен — под ним тот же градиент
           surfaceTintColor: Colors.transparent,
-          indicatorColor: AppColors.aqua.withValues(alpha: .18), // мягкая подсветка активного
+          indicatorColor: AppColors.aqua.withValues(
+            alpha: .18,
+          ), // мягкая подсветка активного
           iconTheme: WidgetStateProperty.resolveWith(
             (states) => IconThemeData(
               size: 26,
               color: states.contains(WidgetState.selected)
-                  ? AppColors.ink        // выбранный — тёмный
-                  : Colors.white,        // невыбранный — белый
+                  ? AppColors
+                        .white // выбранный — тёмный
+                  : AppColors.lightBlue, // невыбранный — белый
             ),
           ),
           labelTextStyle: WidgetStateProperty.resolveWith(
@@ -64,8 +68,8 @@ class AtlantidaApp extends StatelessWidget {
                   ? FontWeight.w700
                   : FontWeight.w600,
               color: states.contains(WidgetState.selected)
-                  ? AppColors.ink
-                  : Colors.white,
+                  ? AppColors.white
+                  : AppColors.lightBlue,
             ),
           ),
         ),
@@ -106,14 +110,12 @@ class _RootTabsState extends State<_RootTabs> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            switch (_index) {
-              0 => 'Главная',
-              1 => 'Каталог',
-              2 => 'О нас',
-              _ => 'Контакты',
-            },
-          ),
+          title: Text(switch (_index) {
+            0 => 'Главная',
+            1 => 'Каталог',
+            2 => 'О нас',
+            _ => 'Контакты',
+          }),
           // Очень мягкая разделительная линия снизу (если не нужна — убери блок bottom)
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(0.5),
@@ -132,10 +134,22 @@ class _RootTabsState extends State<_RootTabs> {
             selectedIndex: _index,
             onDestinationSelected: (i) => setState(() => _index = i),
             destinations: const [
-              NavigationDestination(icon: Icon(Icons.home_outlined), label: 'Главная'),
-              NavigationDestination(icon: Icon(Icons.storefront_outlined), label: 'Каталог'),
-              NavigationDestination(icon: Icon(Icons.info_outline), label: 'О нас'),
-              NavigationDestination(icon: Icon(Icons.call_outlined), label: 'Контакты'),
+              NavigationDestination(
+                icon: Icon(Icons.home_outlined),
+                label: 'Главная',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.storefront_outlined),
+                label: 'Каталог',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.info_outline),
+                label: 'О нас',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.call_outlined),
+                label: 'Контакты',
+              ),
             ],
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'app_colors.dart';
 
 class AppTheme {
@@ -10,20 +11,20 @@ class AppTheme {
       secondary: AppColors.seaGrass,
       surface: AppColors.white,
       onSurface: AppColors.ink,
-      surfaceContainerLowest: AppColors.mint,
+      surfaceContainerLowest: AppColors.lightBlue,
     );
 
     return ThemeData(
       useMaterial3: true,
       colorScheme: cs,
-      scaffoldBackgroundColor: AppColors.mint,
+      scaffoldBackgroundColor: AppColors.lightBlue,
       appBarTheme: const AppBarTheme(
         elevation: 0,
         backgroundColor: Colors.transparent,
         foregroundColor: AppColors.ink,
         centerTitle: true,
       ),
-      cardTheme: CardThemeData (
+      cardTheme: CardThemeData(
         color: AppColors.white,
         elevation: 0,
         margin: EdgeInsets.zero,
@@ -36,7 +37,9 @@ class AppTheme {
           foregroundColor: Colors.black,
           elevation: 0,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
         ),
       ),
       filledButtonTheme: FilledButtonThemeData(
@@ -45,7 +48,9 @@ class AppTheme {
           foregroundColor: Colors.black,
           elevation: 0,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
@@ -86,7 +91,7 @@ class AppTheme {
         foregroundColor: Colors.white,
         centerTitle: true,
       ),
-      cardTheme: CardThemeData (
+      cardTheme: CardThemeData(
         color: const Color(0xFF0F1B2D),
         elevation: 0,
         surfaceTintColor: Colors.transparent,
@@ -99,7 +104,9 @@ class AppTheme {
           foregroundColor: Colors.black,
           elevation: 0,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
         ),
       ),
       filledButtonTheme: FilledButtonThemeData(
@@ -108,7 +115,9 @@ class AppTheme {
           foregroundColor: Colors.black,
           elevation: 0,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
         ),
       ),
       navigationBarTheme: const NavigationBarThemeData(

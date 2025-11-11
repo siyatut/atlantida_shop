@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../utils/launcher_utils.dart';
 
 class HomeScreen extends StatelessWidget {
