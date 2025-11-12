@@ -31,6 +31,7 @@ class HomeScreen extends StatelessWidget {
                       Expanded(
                         child: _YellowButton(
                           text: 'Позвонить',
+                          icon: Icons.call,
                           onTap: () => makePhoneCall('+79625046096'),
                         ),
                       ),
@@ -38,6 +39,7 @@ class HomeScreen extends StatelessWidget {
                       Expanded(
                         child: _YellowButton(
                           text: 'Написать',
+                          icon: Icons.email_outlined,
                           onTap: () => sendEmail(
                             email: 'gagin645@yandex.ru',
                             subject: 'Вопрос по товару из приложения',
@@ -372,21 +374,37 @@ class _SectionTitle extends StatelessWidget {
 }
 
 class _YellowButton extends StatelessWidget {
-  const _YellowButton({required this.text, required this.onTap});
+  const _YellowButton({required this.text, required this.onTap, required this.icon});
   final String text;
+  final IconData? icon;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return FilledButton(
+      onPressed: onTap,
       style: FilledButton.styleFrom(
         backgroundColor: const Color(0xFFF5BE41),
         foregroundColor: Colors.black,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        elevation: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+        ),
       ),
-      onPressed: onTap,
-      child: Text(text, style: const TextStyle(fontWeight: FontWeight.w800)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (icon != null) ...[
+            Icon(icon, size: 20),
+            const SizedBox(width: 8),
+          ],
+          Text(
+            text,
+            style: const TextStyle(fontWeight: FontWeight.w700),
+          ),
+        ],
+      ),
     );
   }
 }
