@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
                   const _SectionTitle('Зоомагазин в Нижнем Новгороде'),
                   const SizedBox(height: 6),
                   Text(
-                    '9 лет опыта. 3 000+ наименований.\nЛюбовь к питомцам начинается здесь.',
+                    '9 лет опыта. 3 000+ наименований.\nЛюбовь к питомцам начинается здесь!',
                     style: TextStyle(
                       color: cs.onSurface.withValues(alpha: .85),
                     ),
@@ -68,13 +68,13 @@ class HomeScreen extends StatelessWidget {
                         icon: Icons.local_shipping_outlined,
                         title: 'Доставка на дом',
                         text:
-                            'При покупке аквариума от 5 000 ₽ — доступна доставка на дом.',
+                            'При покупке аквариума от 5\u00A0000\u00A0₽ доставим на дом.',
                       ),
                       _Adv(
-                        icon: Icons.price_check_outlined,
+                        icon: Icons.attach_money,
                         title: 'Держим низкие цены',
                         text:
-                            'Более 9 лет предлагаем товары по доступным ценам.',
+                            'Более 9 лет мы предлагаем товары по доступным ценам.',
                       ),
                       _Adv(
                         icon: Icons.inventory_2_outlined,
@@ -301,25 +301,65 @@ class _AdvCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: cs.surfaceContainerHighest.withValues(alpha: .25),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.white10),
+        color: cs.surface.withValues(alpha: .85),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.white.withValues(alpha: .6),
+            offset: const Offset(-2, -2),
+            blurRadius: 6,
+          ),
+          // мягкая тень снизу
+          BoxShadow(
+            color: Colors.black.withValues(alpha: .12),
+            offset: const Offset(3, 3),
+            blurRadius: 10,
+          ),
+        ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Icon(adv.icon, size: 28),
-          const SizedBox(height: 8),
-          Text(adv.title, style: const TextStyle(fontWeight: FontWeight.w800)),
-          const SizedBox(height: 6),
-          Text(
-            adv.text,
-            style: TextStyle(
-              color: cs.onSurface.withValues(alpha: .8),
-              height: 1.25,
+          Container(
+            width: 42,
+            height: 42,
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: .85),
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: .05),
+                  blurRadius: 6,
+                  offset: const Offset(2, 2),
+                )
+              ],
+            ),
+            child: Icon(adv.icon, color: cs.primary, size: 24),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  adv.title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  adv.text,
+                  style: TextStyle(
+                    color: cs.onSurface.withValues(alpha: .75),
+                    height: 1.3,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
