@@ -9,7 +9,6 @@ import 'screens/home.dart';
 import 'theme/app_colors.dart';
 import 'theme/app_theme.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Env.load();
@@ -26,9 +25,9 @@ class AtlantidaApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
       builder: (context, child) => DecoratedBox(
-         decoration: const BoxDecoration(gradient: AppColors.gradientAqua),
-         child: child ?? const SizedBox.shrink(),
-       ),
+        decoration: const BoxDecoration(gradient: AppColors.gradientAqua),
+        child: child ?? const SizedBox.shrink(),
+      ),
 
       home: const _RootTabs(),
     );
@@ -44,13 +43,19 @@ class _RootTabs extends StatefulWidget {
 
 class _RootTabsState extends State<_RootTabs> {
   int _index = 0;
+  late final List<Widget> _pages;
 
-  final _pages = const [
-    HomeScreen(),
-    CatalogScreen(),
-    AboutScreen(),
-    ContactsScreen(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+
+    _pages = [
+      HomeScreen(onOpenCatalog: () => setState(() => _index = 1)),
+      const CatalogScreen(),
+      const AboutScreen(),
+      const ContactsScreen(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +71,6 @@ class _RootTabsState extends State<_RootTabs> {
             2 => 'О нас',
             _ => 'Контакты',
           }),
-          // Очень мягкая разделительная линия снизу (если не нужна — убери блок bottom)
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(0.5),
             child: Container(
@@ -75,9 +79,7 @@ class _RootTabsState extends State<_RootTabs> {
             ),
           ),
         ),
-
         body: IndexedStack(index: _index, children: _pages),
-
         bottomNavigationBar: SafeArea(
           top: false,
           child: NavigationBar(

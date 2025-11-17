@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'catalog.dart';
+import '../theme/app_colors.dart';
 import '../utils/launcher_utils.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, this.onOpenCatalog});
+
+  final VoidCallback? onOpenCatalog;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ], 
+                    ],
                   ),
                 ],
               ),
@@ -89,45 +93,82 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           SliverToBoxAdapter(child: _gap12()),
-          // Информационный callout
+          // Качество и поставщики
           SliverToBoxAdapter(
             child: _SurfaceCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const _SectionTitle('Качество и поставщики'),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 8),
                   Text(
-                    'Работаем напрямую с производителями аквариумов из Китая и России.\n'
-                    'Все корма сертифицированы и соответствуют ГОСТу.',
+                    'Все товары, представленные в магазине «Атлантида», соответствуют стандартам.\n '
+                    '\nМы выбираем для вас проверенных поставщиков и качественную продукцию.',
                     style: TextStyle(
                       color: cs.onSurface.withValues(alpha: .85),
+                      height: 1.3,
                     ),
                   ),
                   const SizedBox(height: 12),
-                  const _InfoPill(
-                    icon: Icons.card_giftcard_outlined,
-                    text: 'Бесплатная доставка аквариума от 5 000 руб',
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: OutlinedButton.icon(
+                      onPressed: () {
+                        onOpenCatalog?.call();
+                      },
+                      icon: const Icon(Icons.storefront_outlined),
+                      label: const Text('Перейти в каталог'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.deepBlue,
+                        side: const BorderSide(color: AppColors.deepBlue),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
           ),
           SliverToBoxAdapter(child: _gap12()),
-          // Быстрые категории (кнопки-ярлыки, как на сайте «ЗООТОВАРЫ…»)
           const SliverToBoxAdapter(
             child: _SurfaceCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _SectionTitle('Зоотовары'),
-                  SizedBox(height: 10),
-                  _TagGrid(
-                    tags: [
-                      'Аквариумы',
-                      'Оборудование',
-                      'Корма для ваших домашних питомцев',
-                      'И другие сопутствующие товары',
+                  _SectionTitle('Почему выбирают «Атлантиду»'),
+                  SizedBox(height: 12),
+                  _FeatureGrid(
+                    items: [
+                      _Feature(
+                        icon: Icons.water_outlined,
+                        text: 'Аксессуары и аквариумы',
+                      ),
+                      _Feature(
+                        icon: Icons.shopping_cart_outlined,
+                        text: 'Большой ассортимент товаров',
+                      ),
+                      _Feature(
+                        icon: Icons.support_agent_outlined,
+                        text: 'Профессиональные консультанты',
+                      ),
+                      _Feature(
+                        icon: Icons.emoji_people_outlined,
+                        text: 'Клиентоориентированный подход',
+                      ),
+                      _Feature(
+                        icon: Icons.attach_money,
+                        text: 'Доступные цены',
+                      ),
+                      _Feature(
+                        icon: Icons.grass_outlined,
+                        text: 'Живые рыбки и растения для аквариумов',
+                      ),
                     ],
                   ),
                 ],
@@ -334,10 +375,10 @@ class _AdvCard extends StatelessWidget {
                   color: Colors.black.withValues(alpha: .05),
                   blurRadius: 6,
                   offset: const Offset(2, 2),
-                )
+                ),
               ],
             ),
-            child: Icon(adv.icon, color: cs.primary, size: 24),
+            child: Icon(adv.icon, color: AppColors.deepBlue, size: 24),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -368,32 +409,54 @@ class _AdvCard extends StatelessWidget {
   }
 }
 
-class _InfoPill extends StatelessWidget {
-  const _InfoPill({required this.icon, required this.text});
+class _Feature {
   final IconData icon;
   final String text;
+  const _Feature({required this.icon, required this.text});
+}
+
+class _FeatureGrid extends StatelessWidget {
+  const _FeatureGrid({required this.items});
+  final List<_Feature> items;
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        color: cs.primary.withValues(alpha: .15),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: cs.primary.withValues(alpha: .3)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: cs.primary),
-          const SizedBox(width: 8),
-          Text(
-            text,
-            style: TextStyle(color: cs.onSurface, fontWeight: FontWeight.w700),
-          ),
-        ],
-      ),
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final twoCols = constraints.maxWidth > 380;
+        final gap = 12.0;
+        final itemWidth = twoCols
+            ? (constraints.maxWidth - gap) / 2
+            : constraints.maxWidth;
+
+        return Wrap(
+          spacing: gap,
+          runSpacing: 10,
+          children: items.map((f) {
+            return SizedBox(
+              width: itemWidth,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(f.icon, color: AppColors.deepBlue),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      f.text,
+                      style: TextStyle(
+                        color: cs.onSurface.withValues(alpha: .9),
+                        height: 1.25,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
+        );
+      },
     );
   }
 }
@@ -414,7 +477,11 @@ class _SectionTitle extends StatelessWidget {
 }
 
 class _YellowButton extends StatelessWidget {
-  const _YellowButton({required this.text, required this.onTap, required this.icon});
+  const _YellowButton({
+    required this.text,
+    required this.onTap,
+    required this.icon,
+  });
   final String text;
   final IconData? icon;
   final VoidCallback onTap;
@@ -428,53 +495,15 @@ class _YellowButton extends StatelessWidget {
         foregroundColor: Colors.black,
         elevation: 0,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (icon != null) ...[
-            Icon(icon, size: 20),
-            const SizedBox(width: 8),
-          ],
-          Text(
-            text,
-            style: const TextStyle(fontWeight: FontWeight.w700),
-          ),
+          if (icon != null) ...[Icon(icon, size: 20), const SizedBox(width: 8)],
+          Text(text, style: const TextStyle(fontWeight: FontWeight.w700)),
         ],
       ),
-    );
-  }
-}
-
-class _TagGrid extends StatelessWidget {
-  const _TagGrid({required this.tags});
-  final List<String> tags;
-
-  @override
-  Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      children: tags
-          .map(
-            (t) => Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              decoration: BoxDecoration(
-                color: cs.surfaceContainerHighest.withValues(alpha: .25),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.white10),
-              ),
-              child: Text(
-                t,
-                style: const TextStyle(fontWeight: FontWeight.w700),
-              ),
-            ),
-          )
-          .toList(),
     );
   }
 }
