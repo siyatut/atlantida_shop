@@ -199,7 +199,7 @@ class _HeroBannerLarge extends StatelessWidget {
             fit: StackFit.expand,
             children: [
               // Фон-картинка
-              Image.asset('assets/images/home_banner.jpg', fit: BoxFit.cover),
+              Image.asset('assets/images/blue_fish_with_corals.jpg', fit: BoxFit.cover),
               // Затемняющий градиент слева → вправо
               DecoratedBox(
                 decoration: BoxDecoration(
