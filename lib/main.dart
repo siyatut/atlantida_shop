@@ -71,13 +71,6 @@ class _RootTabsState extends State<_RootTabs> {
             2 => 'О нас',
             _ => 'Контакты',
           }),
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(0.5),
-            child: Container(
-              height: 0.5,
-              color: Colors.white.withValues(alpha: .12),
-            ),
-          ),
         ),
         body: IndexedStack(index: _index, children: _pages),
         bottomNavigationBar: SafeArea(

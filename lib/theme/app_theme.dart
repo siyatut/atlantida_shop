@@ -10,10 +10,10 @@ class AppTheme {
       primary: AppColors.aqua,
       secondary: AppColors.seaGrass,
       // базовые плоскости интерфейса
-      surface: AppColors.white,                 // карточки/поля
-      onSurface: AppColors.ink,                 // текст на поверхностях
-     surfaceContainerLowest: AppColors.mint,   // мягкие панели/«блоки»
-      surfaceContainer: AppColors.lightBlue,    // светлая голубая подложка
+      surface: AppColors.white, // карточки/поля
+      onSurface: AppColors.ink, // текст на поверхностях
+      surfaceContainerLowest: AppColors.mint, // мягкие панели/«блоки»
+      surfaceContainer: AppColors.lightBlue, // светлая голубая подложка
     );
 
     return ThemeData(
@@ -22,8 +22,11 @@ class AppTheme {
       scaffoldBackgroundColor: Colors.transparent,
       appBarTheme: const AppBarTheme(
         elevation: 0,
+        scrolledUnderElevation: 0,
         backgroundColor: Colors.transparent,
         foregroundColor: AppColors.ink,
+        surfaceTintColor: Colors.transparent,
+        shadowColor: Colors.transparent,
         centerTitle: true,
       ),
       cardTheme: CardThemeData(
@@ -72,34 +75,34 @@ class AppTheme {
         ),
       ),
       navigationBarTheme: NavigationBarThemeData(
-          height: 72,
-          elevation: 0,
-          backgroundColor:
-              Colors.transparent, // низ прозрачен — под ним тот же градиент
-          surfaceTintColor: Colors.transparent,
-          indicatorColor: AppColors.aqua.withValues(
-            alpha: .18,
-          ), // мягкая подсветка активного
-          iconTheme: WidgetStateProperty.resolveWith(
-            (states) => IconThemeData(
-              size: 26,
-              color: states.contains(WidgetState.selected)
-                  ? AppColors
-                        .white // выбранный — тёмный
-                  : AppColors.lightBlue, // невыбранный — белый
-            ),
-          ),
-          labelTextStyle: WidgetStateProperty.resolveWith(
-            (states) => TextStyle(
-              fontWeight: states.contains(WidgetState.selected)
-                  ? FontWeight.w700
-                  : FontWeight.w600,
-              color: states.contains(WidgetState.selected)
-                  ? AppColors.white
-                  : AppColors.lightBlue,
-            ),
+        height: 72,
+        elevation: 0,
+        backgroundColor:
+            Colors.transparent, // низ прозрачен — под ним тот же градиент
+        surfaceTintColor: Colors.transparent,
+        indicatorColor: AppColors.aqua.withValues(
+          alpha: .18,
+        ), // мягкая подсветка активного
+        iconTheme: WidgetStateProperty.resolveWith(
+          (states) => IconThemeData(
+            size: 26,
+            color: states.contains(WidgetState.selected)
+                ? AppColors
+                      .white // выбранный — тёмный
+                : AppColors.lightBlue, // невыбранный — белый
           ),
         ),
+        labelTextStyle: WidgetStateProperty.resolveWith(
+          (states) => TextStyle(
+            fontWeight: states.contains(WidgetState.selected)
+                ? FontWeight.w700
+                : FontWeight.w600,
+            color: states.contains(WidgetState.selected)
+                ? AppColors.white
+                : AppColors.lightBlue,
+          ),
+        ),
+      ),
       dividerColor: AppColors.aqua.withValues(alpha: .2),
     );
   }
@@ -121,8 +124,11 @@ class AppTheme {
       scaffoldBackgroundColor: const Color(0xFF081524),
       appBarTheme: const AppBarTheme(
         elevation: 0,
+        scrolledUnderElevation: 0,
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.white,
+        surfaceTintColor: Colors.transparent,
+        shadowColor: Colors.transparent,
         centerTitle: true,
       ),
       cardTheme: CardThemeData(
