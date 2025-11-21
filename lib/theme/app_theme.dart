@@ -28,6 +28,11 @@ class AppTheme {
         surfaceTintColor: Colors.transparent,
         shadowColor: Colors.transparent,
         centerTitle: true,
+        titleTextStyle: TextStyle(
+          fontWeight: FontWeight.w800,
+          fontSize: 20,
+          color: AppColors.ink,
+        ),
       ),
       cardTheme: CardThemeData(
         color: AppColors.white,
@@ -130,6 +135,11 @@ class AppTheme {
         surfaceTintColor: Colors.transparent,
         shadowColor: Colors.transparent,
         centerTitle: true,
+        titleTextStyle: TextStyle(
+          fontWeight: FontWeight.w800,
+          fontSize: 20,
+          color: AppColors.ink,
+        ),
       ),
       cardTheme: CardThemeData(
         color: const Color(0xFF0F1B2D),
