@@ -4,6 +4,7 @@ import '../data/woo/woo_repository.dart';
 import '../data/woo/woo_models.dart';
 import '../domain/product.dart';
 import 'product_details.dart';
+import '../theme/app_colors.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -392,26 +393,46 @@ class _DynamicFilters extends StatelessWidget {
     );
   }
 
-  Widget _chip(
+    Widget _chip(
     BuildContext context, {
     required String label,
     required bool selected,
     required VoidCallback onTap,
   }) {
-    final cs = Theme.of(context).colorScheme;
     return Padding(
       padding: const EdgeInsets.only(right: 8),
       child: ChoiceChip(
         selected: selected,
-        label: Text(label),
+        showCheckmark: false,
         onSelected: (_) => onTap(),
-        labelStyle: TextStyle(
-          fontWeight: FontWeight.w700,
-          color: selected ? cs.onPrimary : null,
+        label: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (selected) ...[
+              const Icon(Icons.check, size: 18, color: Colors.white),
+              const SizedBox(width: 4),
+            ],
+            Text(label),
+          ],
         ),
-        selectedColor: cs.primary,
-        backgroundColor: cs.surfaceContainerHighest.withValues(alpha: .25),
+        labelStyle: TextStyle(
+          fontWeight: FontWeight.w800,
+          fontSize: 15,
+          color: selected ? Colors.white : AppColors.deepBlue,
+        ),
+        selectedColor: AppColors.teal,
+        backgroundColor: Colors.white.withValues(alpha: .95),
+        side: BorderSide(
+          color: selected
+              ? AppColors.teal
+              : Colors.white.withValues(alpha: 0),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18),
+        ),
       ),
     );
   }
+
 }

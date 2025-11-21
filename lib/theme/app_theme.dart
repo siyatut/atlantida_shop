@@ -41,14 +41,6 @@ class AppTheme {
         surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
-      // chipTheme: ChipThemeData(
-      //   side: BorderSide.none,
-      //   labelStyle: const TextStyle(fontWeight: FontWeight.w700),
-      //   backgroundColor: cs.surfaceContainer.withValues(alpha: .25),
-      //   selectedColor: cs.primary,
-      //   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      //  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-      // ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.aqua,
