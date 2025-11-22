@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-import '../theme/app_colors.dart'; 
+import '../utils/launcher_utils.dart';
+import '../widgets/yellow_button.dart';
 
 class ContactsScreen extends StatelessWidget {
   const ContactsScreen({super.key});
@@ -8,34 +8,31 @@ class ContactsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Theme(
-        data: Theme.of(context).copyWith(
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.mint,
-              foregroundColor: AppColors.ink,
-              elevation: 0,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              shadowColor: Colors.black.withValues(alpha: .1),
-            ),
-          ),
-        ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
         child: Wrap(
           spacing: 12,
           runSpacing: 12,
           children: [
-            ElevatedButton.icon(
-              onPressed: () => launchUrl(Uri.parse('tel:+79625046096')),
-              icon: const Icon(Icons.call),
-              label: const Text('Позвонить'),
+            SizedBox(
+              width: 160,
+              child: YellowButton(
+                text: 'Позвонить',
+                icon: Icons.call,
+                onTap: () => makePhoneCall('+79625046096'),
+              ),
             ),
-            ElevatedButton.icon(
-              onPressed: () => launchUrl(Uri.parse('mailto:gagin645@yandex.ru')),
-              icon: const Icon(Icons.email_outlined),
-              label: const Text('Написать'),
+            SizedBox(
+              width: 160,
+              child: YellowButton(
+                text: 'Написать',
+                icon: Icons.email_outlined,
+                onTap: () => sendEmail(
+                  email: 'gagin645@yandex.ru',
+                  subject: 'Вопрос из приложения',
+                  body: 'Здравствуйте! Хочу уточнить детали…',
+                ),
+              ),
             ),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../utils/launcher_utils.dart';
+import '../widgets/yellow_button.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, this.onOpenCatalog});
@@ -32,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: _YellowButton(
+                        child: YellowButton(
                           text: 'Позвонить',
                           icon: Icons.call,
                           onTap: () => makePhoneCall('+79625046096'),
@@ -40,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: _YellowButton(
+                        child: YellowButton(
                           text: 'Написать',
                           icon: Icons.email_outlined,
                           onTap: () => sendEmail(
@@ -471,38 +472,6 @@ class _SectionTitle extends StatelessWidget {
       style: Theme.of(
         context,
       ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w900),
-    );
-  }
-}
-
-class _YellowButton extends StatelessWidget {
-  const _YellowButton({
-    required this.text,
-    required this.onTap,
-    required this.icon,
-  });
-  final String text;
-  final IconData? icon;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return FilledButton(
-      onPressed: onTap,
-      style: FilledButton.styleFrom(
-        backgroundColor: const Color(0xFFF5BE41),
-        foregroundColor: Colors.black,
-        elevation: 0,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (icon != null) ...[Icon(icon, size: 20), const SizedBox(width: 8)],
-          Text(text, style: const TextStyle(fontWeight: FontWeight.w700)),
-        ],
-      ),
     );
   }
 }

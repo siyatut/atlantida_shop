@@ -3,7 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import '../domain/product.dart';
 import '../theme/app_colors.dart';
+
 import '../utils/launcher_utils.dart';
+import '../widgets/yellow_button.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   const ProductDetailsScreen({super.key, required this.product});
@@ -16,10 +18,7 @@ class ProductDetailsScreen extends StatelessWidget {
     final description = _cleanDescription(product.description);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const SizedBox.shrink(),
-        centerTitle: false,
-      ),
+      appBar: AppBar(title: const SizedBox.shrink(), centerTitle: false),
       body: SafeArea(
         bottom: false,
         child: SingleChildScrollView(
@@ -67,8 +66,9 @@ class ProductDetailsScreen extends StatelessWidget {
                               child: SizedBox(
                                 width: 24,
                                 height: 24,
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 2),
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
                               ),
                             ),
                             errorWidget: (_, __, ___) => const Icon(
@@ -95,9 +95,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.all(16),
                 child: Text(
-                  description.isEmpty
-                      ? 'Описание появится позже'
-                      : description,
+                  description.isEmpty ? 'Описание появится позже' : description,
                   style: TextStyle(
                     color: cs.onSurface.withValues(alpha: .9),
                     height: 1.3,
@@ -155,15 +153,12 @@ class _ContactCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Уточнить наличие и стоимость\nтовара в магазине',
-            style: TextStyle(
-              fontWeight: FontWeight.w800,
-              fontSize: 17,
-            ),
+            'Уточнить подробности в магазине',
+            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 17),
           ),
           const SizedBox(height: 8),
           Text(
-            'Сообщите, что вас интересует:\n«$productTitle».',
+            'Расскажите о вашем запросе, мы обязательно поможем сориентироваться',
             style: TextStyle(
               color: cs.onSurface.withValues(alpha: .7),
               height: 1.3,
@@ -173,23 +168,23 @@ class _ContactCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: FilledButton.icon(
-                  onPressed: () => makePhoneCall('+79625046096'),
-                  icon: const Icon(Icons.call),
-                  label: const Text('Позвонить'),
+                child: YellowButton(
+                  text: 'Позвонить',
+                  icon: Icons.call,
+                  onTap: () => makePhoneCall('+79625046096'),
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: FilledButton.icon(
-                  onPressed: () => sendEmail(
+                child: YellowButton(
+                  text: 'Написать',
+                  icon: Icons.email_outlined,
+                  onTap: () => sendEmail(
                     email: 'gagin645@yandex.ru',
                     subject: 'Вопрос по товару из приложения',
                     body:
                         'Здравствуйте! Хочу уточнить наличие и стоимость товара «$productTitle».',
                   ),
-                  icon: const Icon(Icons.email_outlined),
-                  label: const Text('Написать'),
                 ),
               ),
             ],
