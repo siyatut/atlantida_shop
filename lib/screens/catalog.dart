@@ -23,7 +23,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
   String? _error;
   List<Product> _items = const [];
 
-  bool _catsLoading = true;
   List<WooCategory> _cats = const [];
   final Map<String, int> _slugToId = {}; // slug -> id
 
@@ -35,37 +34,51 @@ class _CatalogScreenState extends State<CatalogScreen> {
   void initState() {
     super.initState();
     _activeFilter = widget.initialFilter;
-    _loadCategories().then((_) => _load(reset: true));
+    _loadCategories().then((_) {
+      if (_activeFilter == null) {
+        final firstSlug = _findFirstAvailableSlug();
+        if (firstSlug != null) {
+          _activeFilter = firstSlug;
+        }
+      }
+      _load(reset: true);
+    });
+  }
+
+  String? _findFirstAvailableSlug() {
+    final desiredOrder = ['rybki', 'gryzuny', 'koshki', 'sobaki'];
+    for (final slug in desiredOrder) {
+      if (_slugToId.containsKey(slug)) {
+        return slug;
+      }
+    }
+    return null;
   }
 
   Future<void> _loadCategories() async {
-    setState(() => _catsLoading = true);
     try {
       final cats = await _repo.categories();
-      // Оставим только те, что видим в макете:
-      const desired = {
-        'gryzuny': 'Грызуны',
-        'koshki': 'Кошки',
-        'pticy': 'Птицы', // иногда slug может быть pticy/ptitsy
-        'ptitsy': 'Птицы',
-        'rybki': 'Рыбки',
-        'sobaki': 'Собаки',
-      };
-      final filtered = <WooCategory>[];
+      _slugToId.clear();
+      final List<WooCategory> filtered = [];
+
       for (final c in cats) {
-        if (desired.keys.contains(c.slug)) {
+        final slug = c.slug.toLowerCase();
+        if ([
+          'rybki',
+          'gryzuny',
+          'koshki',
+          'sobaki',
+          'pticzy',
+          'reptilii',
+        ].contains(slug)) {
           filtered.add(c);
-          _slugToId[c.slug] = c.id;
+          _slugToId[slug] = c.id;
         }
       }
-      setState(() {
-        _cats = filtered;
-      });
+      setState(() => _cats = filtered);
     } catch (e) {
       // ignore: avoid_print
       print('Failed to load categories: $e');
-    } finally {
-      setState(() => _catsLoading = false);
     }
   }
 
@@ -113,7 +126,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
     return Column(
       children: [
         _DynamicFilters(
-          loading: _catsLoading,
           categories: _cats,
           activeSlug: _activeFilter,
           onSelect: (slug) {
@@ -345,43 +357,77 @@ class _PriceText extends StatelessWidget {
 
 class _DynamicFilters extends StatelessWidget {
   const _DynamicFilters({
-    required this.loading,
     required this.categories,
     required this.activeSlug,
     required this.onSelect,
   });
 
-  final bool loading;
   final List<WooCategory> categories;
   final String? activeSlug;
   final ValueChanged<String?> onSelect;
 
+  static const _orderedTabs = [
+    _TabInfo(slugs: ['rybki'], label: 'Рыбки'),
+    _TabInfo(slugs: ['gryzuny'], label: 'Грызуны'),
+    _TabInfo(slugs: ['koshki'], label: 'Кошки'),
+    _TabInfo(slugs: ['sobaki'], label: 'Собаки'),
+    _TabInfo(slugs: ['pticzy'], label: 'Птицы'),
+    _TabInfo(slugs: ['reptilii'], label: 'Рептилии'),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    if (loading) {
+    if (categories.isEmpty) {
       return const Padding(
         padding: EdgeInsets.symmetric(vertical: 12),
         child: LinearProgressIndicator(minHeight: 2),
       );
     }
 
-    final chips = <Widget>[
-      _chip(
-        context,
-        label: 'Все',
-        selected: activeSlug == null,
-        onTap: () => onSelect(null),
-      ),
-    ];
+    final chips = <Widget>[];
 
-    final sorted = [...categories]..sort((a, b) => a.name.compareTo(b.name));
-    for (final c in sorted) {
+    for (final tab in _orderedTabs) {
+      final category = categories.cast<WooCategory?>().firstWhere(
+        (c) => c != null && tab.slugs.contains(c.slug),
+        orElse: () => null,
+      );
+
+      if (category == null) continue;
+
+      final bool selected = activeSlug == category.slug;
+
       chips.add(
-        _chip(
-          context,
-          label: c.name,
-          selected: activeSlug == c.slug,
-          onTap: () => onSelect(c.slug),
+        Padding(
+          padding: const EdgeInsets.only(right: 8),
+          child: ChoiceChip(
+            selected: selected,
+            showCheckmark: false,
+            onSelected: (_) => onSelect(category.slug),
+            label: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (selected) ...[
+                  const Icon(Icons.check, size: 18, color: Colors.white),
+                  const SizedBox(width: 4),
+                ],
+                Text(tab.label),
+              ],
+            ),
+            labelStyle: TextStyle(
+              fontWeight: FontWeight.w800,
+              fontSize: 15,
+              color: selected ? Colors.white : AppColors.deepBlue,
+            ),
+            selectedColor: AppColors.teal,
+            backgroundColor: Colors.white.withValues(alpha: .95),
+            side: BorderSide(
+              color: selected ? AppColors.teal : Colors.transparent,
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
+            ),
+          ),
         ),
       );
     }
@@ -392,47 +438,10 @@ class _DynamicFilters extends StatelessWidget {
       child: Row(children: chips),
     );
   }
+}
 
-    Widget _chip(
-    BuildContext context, {
-    required String label,
-    required bool selected,
-    required VoidCallback onTap,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 8),
-      child: ChoiceChip(
-        selected: selected,
-        showCheckmark: false,
-        onSelected: (_) => onTap(),
-        label: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (selected) ...[
-              const Icon(Icons.check, size: 18, color: Colors.white),
-              const SizedBox(width: 4),
-            ],
-            Text(label),
-          ],
-        ),
-        labelStyle: TextStyle(
-          fontWeight: FontWeight.w800,
-          fontSize: 15,
-          color: selected ? Colors.white : AppColors.deepBlue,
-        ),
-        selectedColor: AppColors.teal,
-        backgroundColor: Colors.white.withValues(alpha: .95),
-        side: BorderSide(
-          color: selected
-              ? AppColors.teal
-              : Colors.white.withValues(alpha: 0),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
-        ),
-      ),
-    );
-  }
-
+class _TabInfo {
+  final List<String> slugs;
+  final String label;
+  const _TabInfo({required this.slugs, required this.label});
 }
