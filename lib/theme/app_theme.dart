@@ -18,6 +18,7 @@ class AppTheme {
 
     return ThemeData(
       useMaterial3: true,
+      progressIndicatorTheme: const ProgressIndicatorThemeData(color: AppColors.teal),
       colorScheme: cs,
       scaffoldBackgroundColor: Colors.transparent,
       appBarTheme: const AppBarTheme(
@@ -117,6 +118,7 @@ class AppTheme {
 
     return ThemeData(
       useMaterial3: true,
+      progressIndicatorTheme: const ProgressIndicatorThemeData(color: AppColors.teal),
       colorScheme: cs,
       scaffoldBackgroundColor: const Color(0xFF081524),
       appBarTheme: const AppBarTheme(
