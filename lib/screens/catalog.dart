@@ -27,7 +27,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
   final Map<String, int> _slugToId = {}; // slug -> id
 
   int _page = 1;
-  static const int _perPage = 100;
+  static const int _perPage = 40;
   bool _hasMore = true;
 
   @override
@@ -230,6 +230,7 @@ class _LoadMoreFooter extends StatelessWidget {
     required this.loading,
     required this.onTap,
   });
+
   final bool visible;
   final bool loading;
   final VoidCallback onTap;
@@ -237,18 +238,52 @@ class _LoadMoreFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!visible) return const SizedBox.shrink();
+
     if (loading) {
       return const Padding(
         padding: EdgeInsets.symmetric(vertical: 16),
-        child: Center(child: CircularProgressIndicator()),
+        child: Center(
+          child: CircularProgressIndicator(
+            color: AppColors.lightBlue,
+            strokeWidth: 2.5,
+          ),
+        ),
       );
     }
+
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.only(top: 16, bottom: 24),
       child: Center(
-        child: OutlinedButton(
-          onPressed: onTap,
-          child: const Text('Показать ещё'),
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: onTap,
+            style: ElevatedButton.styleFrom(
+              elevation: 0,
+              backgroundColor: Colors.white.withValues(alpha: .95),
+              foregroundColor: AppColors.deepBlue,
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: BorderSide(
+                  color: AppColors.deepBlue.withValues(alpha: .25),
+                  width: 1.2,
+                ),
+              ),
+              shadowColor: Colors.black.withValues(alpha: .20),
+            ),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.keyboard_double_arrow_down),
+                SizedBox(width: 6),
+                Text(
+                  'Показать ещё',
+                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
