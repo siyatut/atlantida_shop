@@ -143,7 +143,13 @@ class _CatalogScreenState extends State<CatalogScreen> {
                 children: [
                   const Text('Не удалось загрузить товары'),
                   const SizedBox(height: 8),
-                  Text(_error!, style: const TextStyle(color: Colors.white70)),
+                  Text(
+                    _error!,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                  ),
+
                   const SizedBox(height: 12),
                   FilledButton(
                     onPressed: _load,
