@@ -387,14 +387,16 @@ class _DynamicFilters extends StatelessWidget {
     final chips = <Widget>[];
 
     for (final tab in _orderedTabs) {
-      final category = categories.cast<WooCategory?>().firstWhere(
-        (c) => c != null && tab.slugs.contains(c.slug),
-        orElse: () => null,
-      );
+      final category = categories.cast<WooCategory?>().firstWhere((c) {
+        if (c == null) return false;
+        final slug = c.slug.toLowerCase();
+        return tab.slugs.contains(slug);
+      }, orElse: () => null);
 
       if (category == null) continue;
 
-      final bool selected = activeSlug == category.slug;
+      final slug = category.slug.toLowerCase();
+      final bool selected = activeSlug == slug;
 
       chips.add(
         Padding(
@@ -402,7 +404,7 @@ class _DynamicFilters extends StatelessWidget {
           child: ChoiceChip(
             selected: selected,
             showCheckmark: false,
-            onSelected: (_) => onSelect(category.slug),
+            onSelected: (_) => onSelect(slug),
             label: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
