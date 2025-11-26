@@ -34,15 +34,20 @@ class _CatalogScreenState extends State<CatalogScreen> {
   void initState() {
     super.initState();
     _activeFilter = widget.initialFilter;
-    _loadCategories().then((_) {
-      if (_activeFilter == null) {
-        final firstSlug = _findFirstAvailableSlug();
-        if (firstSlug != null) {
-          _activeFilter = firstSlug;
-        }
+    _init();
+  }
+
+  Future<void> _init() async {
+    await _loadCategories();
+    if (!mounted) return;
+
+    if (_activeFilter == null) {
+      final firstSlug = _findFirstAvailableSlug();
+      if (firstSlug != null) {
+        _activeFilter = firstSlug;
       }
-      _load(reset: true);
-    });
+    }
+    await _load(reset: true);
   }
 
   String? _findFirstAvailableSlug() {
@@ -75,6 +80,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
           _slugToId[slug] = c.id;
         }
       }
+      if (!mounted) return;
       setState(() => _cats = filtered);
     } catch (e) {
       // ignore: avoid_print
