@@ -5,6 +5,7 @@ import '../data/woo/woo_models.dart';
 import '../domain/product.dart';
 import 'product_details.dart';
 import '../theme/app_colors.dart';
+import '../widgets/yellow_button.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -205,7 +206,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                               const SizedBox(height: 8),
                               _PriceText(price: item.price),
                               const SizedBox(height: 12),
-                              _YellowButton(
+                              YellowButton(
                                 text: 'Подробнее',
                                 onTap: () {
                                   Navigator.of(context).push(
@@ -355,30 +356,6 @@ class _ProductImage extends StatelessWidget {
                   ),
                 ),
         ),
-      ),
-    );
-  }
-}
-
-class _YellowButton extends StatelessWidget {
-  const _YellowButton({required this.text, required this.onTap});
-  final String text;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onTap,
-      style: ElevatedButton.styleFrom(
-        elevation: 0,
-        backgroundColor: const Color(0xFFF6C445),
-        foregroundColor: const Color(0xFF132B45),
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-      child: Text(
-        text,
-        style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
       ),
     );
   }

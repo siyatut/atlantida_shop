@@ -34,7 +34,7 @@ class YellowButton extends StatelessWidget {
           ],
           Text(
             text,
-            style: const TextStyle(fontWeight: FontWeight.w700),
+            style: const TextStyle(fontWeight: FontWeight.w800),
           ),
         ],
       ),
