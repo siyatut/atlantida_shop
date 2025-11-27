@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'app_colors.dart';
 
 class AppTheme {
@@ -18,9 +17,57 @@ class AppTheme {
 
     return ThemeData(
       useMaterial3: true,
-      progressIndicatorTheme: const ProgressIndicatorThemeData(color: AppColors.teal),
       colorScheme: cs,
+      progressIndicatorTheme: const ProgressIndicatorThemeData(
+        color: AppColors.teal,
+      ),
+      textTheme: const TextTheme(
+        headlineSmall: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.w900,
+          height: 1.2,
+          color: AppColors.ink,
+        ),
+        titleLarge: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w800,
+          height: 1.2,
+          color: AppColors.ink,
+        ),
+        titleMedium: TextStyle(
+          fontSize: 17,
+          fontWeight: FontWeight.w800,
+          height: 1.25,
+          color: AppColors.ink,
+        ),
+        bodyLarge: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          height: 1.35,
+          color: AppColors.ink,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.w500,
+          height: 1.35,
+          color: AppColors.ink,
+        ),
+        labelLarge: TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.w800,
+          height: 1.2,
+          color: AppColors.ink,
+        ),
+        labelMedium: TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+          height: 1.2,
+          color: AppColors.softInk,
+        ),
+      ),
+
       scaffoldBackgroundColor: Colors.transparent,
+
       appBarTheme: const AppBarTheme(
         elevation: 0,
         scrolledUnderElevation: 0,
@@ -35,6 +82,7 @@ class AppTheme {
           color: AppColors.ink,
         ),
       ),
+
       cardTheme: CardThemeData(
         color: AppColors.white,
         elevation: 0,
@@ -42,6 +90,7 @@ class AppTheme {
         surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
+
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.aqua,
@@ -53,9 +102,10 @@ class AppTheme {
           ),
         ),
       ),
+
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          backgroundColor: const Color(0xFFF5BE41), // жёлтая кнопка
+          backgroundColor: const Color(0xFFF5BE41),
           foregroundColor: Colors.black,
           elevation: 0,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -64,6 +114,7 @@ class AppTheme {
           ),
         ),
       ),
+
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.white,
@@ -72,22 +123,19 @@ class AppTheme {
           borderSide: BorderSide(color: AppColors.aqua.withValues(alpha: .35)),
         ),
       ),
+
       navigationBarTheme: NavigationBarThemeData(
         height: 72,
         elevation: 0,
-        backgroundColor:
-            Colors.transparent, // низ прозрачен — под ним тот же градиент
+        backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
-        indicatorColor: AppColors.aqua.withValues(
-          alpha: .18,
-        ), // мягкая подсветка активного
+        indicatorColor: AppColors.aqua.withValues(alpha: .18),
         iconTheme: WidgetStateProperty.resolveWith(
           (states) => IconThemeData(
             size: 26,
             color: states.contains(WidgetState.selected)
-                ? AppColors
-                      .white // выбранный — тёмный
-                : AppColors.lightBlue, // невыбранный — белый
+                ? AppColors.white
+                : AppColors.lightBlue,
           ),
         ),
         labelTextStyle: WidgetStateProperty.resolveWith(
@@ -101,6 +149,7 @@ class AppTheme {
           ),
         ),
       ),
+
       dividerColor: AppColors.aqua.withValues(alpha: .2),
     );
   }
@@ -113,28 +162,79 @@ class AppTheme {
       primary: AppColors.aqua,
       secondary: AppColors.seaGrass,
       surface: const Color(0xFF0F1B2D),
-      onSurface: Colors.white,
+      onSurface: AppColors.white,
     );
 
     return ThemeData(
       useMaterial3: true,
-      progressIndicatorTheme: const ProgressIndicatorThemeData(color: AppColors.teal),
       colorScheme: cs,
+
+      progressIndicatorTheme: const ProgressIndicatorThemeData(
+        color: AppColors.teal,
+      ),
+
+      textTheme: const TextTheme(
+        headlineSmall: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.w900,
+          height: 1.2,
+          color: AppColors.white,
+        ),
+        titleLarge: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w800,
+          height: 1.2,
+          color: AppColors.white,
+        ),
+        titleMedium: TextStyle(
+          fontSize: 17,
+          fontWeight: FontWeight.w800,
+          height: 1.25,
+          color: AppColors.white,
+        ),
+        bodyLarge: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          height: 1.35,
+          color: AppColors.white,
+        ),
+        bodyMedium: TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.w500,
+          height: 1.35,
+          color: AppColors.white,
+        ),
+        labelLarge: TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.w800,
+          height: 1.2,
+          color: AppColors.white,
+        ),
+        labelMedium: TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+          height: 1.2,
+          color: Colors.white70,
+        ),
+      ),
+
       scaffoldBackgroundColor: const Color(0xFF081524),
+
       appBarTheme: const AppBarTheme(
         elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: Colors.transparent,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.white,
         surfaceTintColor: Colors.transparent,
         shadowColor: Colors.transparent,
         centerTitle: true,
         titleTextStyle: TextStyle(
           fontWeight: FontWeight.w800,
           fontSize: 20,
-          color: AppColors.ink,
+          color: AppColors.white,
         ),
       ),
+
       cardTheme: CardThemeData(
         color: const Color(0xFF0F1B2D),
         elevation: 0,
@@ -142,6 +242,7 @@ class AppTheme {
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
+
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.aqua,
@@ -153,6 +254,7 @@ class AppTheme {
           ),
         ),
       ),
+
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           backgroundColor: const Color(0xFFF5BE41),
@@ -164,11 +266,13 @@ class AppTheme {
           ),
         ),
       ),
+
       navigationBarTheme: const NavigationBarThemeData(
         elevation: 0,
         backgroundColor: Colors.transparent,
         indicatorColor: Color(0x3300AEEF),
       ),
+
       dividerColor: Colors.white24,
     );
   }
