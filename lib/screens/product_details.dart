@@ -5,6 +5,7 @@ import '../domain/product.dart';
 import '../theme/app_colors.dart';
 
 import '../utils/launcher_utils.dart';
+import '../utils/text_utils.dart';
 import '../widgets/yellow_button.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
@@ -28,11 +29,12 @@ class ProductDetailsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                product.title,
+                splitTitleInTwo(product.title),
                 textAlign: TextAlign.center,
                 style: textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w900,
                   color: AppColors.deepBlue,
+                  height: 1.15,
                 ),
               ),
               const SizedBox(height: 16),
@@ -121,7 +123,28 @@ class ProductDetailsScreen extends StatelessWidget {
         .replaceAll('<br/>', '\n')
         .replaceAll('<br>', '\n');
 
+    text = text
+        .replaceAll(RegExp(r'</p\s*>', caseSensitive: false), '\n\n')
+        .replaceAll(RegExp(r'<p[^>]*>', caseSensitive: false), '');
+
+    text = text
+        .replaceAll(RegExp(r'<li[^>]*>', caseSensitive: false), '• ')
+        .replaceAll(RegExp(r'</li\s*>', caseSensitive: false), '\n');
+
+    text = text.replaceAll(
+      RegExp(r'</?(ul|ol)[^>]*>', caseSensitive: false),
+      '',
+    );
+
     text = text.replaceAll(RegExp(r'<[^>]+>'), '');
+
+    text = text
+        .replaceAll('&nbsp;', ' ')
+        .replaceAll('&amp;', '&')
+        .replaceAll('&quot;', '"')
+        .replaceAll('&#39;', "'");
+
+    text = text.replaceAll(RegExp(r'\n{3,}'), '\n\n');
 
     return text.trim();
   }
