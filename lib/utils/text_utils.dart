@@ -21,3 +21,21 @@ String splitTitleInTwo(String title) {
   final line2 = words.sublist(bestIndex).join(' ');
   return '$line1\n$line2';
 }
+
+String fixPrepositions(String text) {
+  final preps = [
+    'в','к','с','у','о','а','я','и','но','на','по','за','из','от','до',
+    'без','при','над','под','про','для','об','обо','со','ко','во'
+  ];
+
+  final pattern = RegExp(
+    r'(^|[\s\n])(' + preps.join('|') + r')\s+(?=\S)',
+    caseSensitive: false,
+  );
+
+  return text.replaceAllMapped(pattern, (m) {
+    final leftSpace = m.group(1)!;   // пробел/начало строки
+    final prep = m.group(2)!;        // сам предлог
+    return '$leftSpace$prep\u00A0';  // NBSP после предлога
+  });
+}

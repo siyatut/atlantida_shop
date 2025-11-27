@@ -17,7 +17,7 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final description = _cleanDescription(product.description);
+    final description = fixPrepositions(_cleanDescription(product.description));
 
     return Scaffold(
       appBar: AppBar(title: const SizedBox.shrink()),
