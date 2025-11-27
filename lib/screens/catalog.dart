@@ -130,6 +130,8 @@ class _CatalogScreenState extends State<CatalogScreen> {
   @override
   Widget build(BuildContext context) {
     final products = _items;
+    final textTheme = Theme.of(context).textTheme;
+
     return Column(
       children: [
         _DynamicFilters(
@@ -148,19 +150,22 @@ class _CatalogScreenState extends State<CatalogScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text('Не удалось загрузить товары'),
+                  Text(
+                    'Не удалось загрузить товары',
+                    style: textTheme.titleMedium,
+                  ),
                   const SizedBox(height: 8),
                   Text(
                     _error!,
-                    style: TextStyle(
+                    style: textTheme.bodyMedium?.copyWith(
                       color: Theme.of(context).colorScheme.error,
                     ),
+                    textAlign: TextAlign.center,
                   ),
-
                   const SizedBox(height: 12),
                   FilledButton(
                     onPressed: _load,
-                    child: const Text('Повторить'),
+                    child: Text('Повторить', style: textTheme.labelLarge),
                   ),
                 ],
               ),
@@ -197,10 +202,8 @@ class _CatalogScreenState extends State<CatalogScreen> {
                                 item.title,
                                 // maxLines: 2,
                                 //  overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 17,
-                                  color: Color(0xFF17324A),
+                                style: textTheme.titleMedium?.copyWith(
+                                  color: const Color(0xFF17324A),
                                 ),
                               ),
                               const SizedBox(height: 8),
@@ -250,6 +253,8 @@ class _LoadMoreFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     if (!visible) return const SizedBox.shrink();
 
     if (loading) {
@@ -273,7 +278,7 @@ class _LoadMoreFooter extends StatelessWidget {
             onPressed: onTap,
             style: ElevatedButton.styleFrom(
               elevation: 0,
-              backgroundColor: Colors.white.withValues(alpha: .95),
+              backgroundColor: AppColors.white.withValues(alpha: .95),
               foregroundColor: AppColors.deepBlue,
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
@@ -285,15 +290,12 @@ class _LoadMoreFooter extends StatelessWidget {
               ),
               shadowColor: Colors.black.withValues(alpha: .20),
             ),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.keyboard_double_arrow_down),
-                SizedBox(width: 6),
-                Text(
-                  'Показать ещё',
-                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
-                ),
+                const Icon(Icons.keyboard_double_arrow_down),
+                const SizedBox(width: 6),
+                Text('Показать ещё', style: textTheme.labelLarge),
               ],
             ),
           ),
@@ -311,7 +313,7 @@ class _Card extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -367,13 +369,14 @@ class _PriceText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final base = Theme.of(context).textTheme.bodyMedium;
+
     final hasPrice = price != null && price!.isNotEmpty;
     return Text(
       hasPrice ? '$price руб.' : 'Цена по запросу',
-      style: TextStyle(
-        color: hasPrice ? const Color(0xFF0E3A69) : Colors.black54,
+      style: base?.copyWith(
         fontWeight: FontWeight.w700,
-        fontSize: 15,
+        color: hasPrice ? AppColors.deepBlue : AppColors.softInk,
       ),
     );
   }
@@ -401,6 +404,8 @@ class _DynamicFilters extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     if (categories.isEmpty) {
       return const Padding(
         padding: EdgeInsets.symmetric(vertical: 12),
@@ -433,19 +438,17 @@ class _DynamicFilters extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (selected) ...[
-                  const Icon(Icons.check, size: 18, color: Colors.white),
+                  const Icon(Icons.check, size: 18, color: AppColors.white),
                   const SizedBox(width: 4),
                 ],
                 Text(tab.label),
               ],
             ),
-            labelStyle: TextStyle(
-              fontWeight: FontWeight.w800,
-              fontSize: 15,
-              color: selected ? Colors.white : AppColors.deepBlue,
+            labelStyle: textTheme.labelLarge?.copyWith(
+              color: selected ? AppColors.white : AppColors.deepBlue,
             ),
             selectedColor: AppColors.teal,
-            backgroundColor: Colors.white.withValues(alpha: .95),
+            backgroundColor: AppColors.white.withValues(alpha: .95),
             side: BorderSide(
               color: selected ? AppColors.teal : Colors.transparent,
             ),

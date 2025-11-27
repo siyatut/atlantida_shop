@@ -5,22 +5,22 @@ class AboutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return ListView(
       padding: const EdgeInsets.all(16),
-      children: const [
-        Text(
-          'О магазине «Атлантида»',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
-        ),
-        SizedBox(height: 8),
+      children: [
+        Text('О магазине «Атлантида»', style: textTheme.titleLarge),
+        const SizedBox(height: 8),
         Text(
           'Зоомагазин в Нижнем Новгороде. Большой выбор аквариумов, '
           'оборудования, кормов и сопутствующих товаров.',
+          style: textTheme.bodyLarge,
         ),
-        SizedBox(height: 16),
-        Text('Адрес: ул. Коминтерна, 117'),
-        SizedBox(height: 6),
-        Text('Телефон: 8 (962) 504-60-96'),
+        const SizedBox(height: 16),
+        Text('Адрес: ул. Коминтерна, 117', style: textTheme.bodyMedium),
+        const SizedBox(height: 6),
+        Text('Телефон: 8 (962) 504-60-96', style: textTheme.bodyMedium),
       ],
     );
   }
