@@ -11,6 +11,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return SafeArea(
       child: CustomScrollView(
         slivers: [
@@ -25,7 +27,7 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(height: 6),
                   Text(
                     '9 лет опыта. 3 000+ наименований.\nЛюбовь к питомцам начинается здесь!',
-                    style: TextStyle(
+                    style: textTheme.bodyMedium?.copyWith(
                       color: cs.onSurface.withValues(alpha: .85),
                     ),
                   ),
@@ -104,7 +106,7 @@ class HomeScreen extends StatelessWidget {
                   Text(
                     'Все товары, представленные в магазине «Атлантида», соответствуют стандартам.\n '
                     '\nМы выбираем для вас проверенных поставщиков и качественную продукцию.',
-                    style: TextStyle(
+                    style: textTheme.bodyMedium?.copyWith(
                       color: cs.onSurface.withValues(alpha: .85),
                       height: 1.3,
                     ),
@@ -117,7 +119,10 @@ class HomeScreen extends StatelessWidget {
                         onOpenCatalog?.call();
                       },
                       icon: const Icon(Icons.storefront_outlined),
-                      label: const Text('Перейти в каталог'),
+                      label: Text(
+                        'Перейти в каталог',
+                        style: textTheme.labelLarge,
+                      ),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppColors.deepBlue,
                         side: const BorderSide(color: AppColors.deepBlue),
@@ -199,7 +204,10 @@ class _HeroBannerLarge extends StatelessWidget {
             fit: StackFit.expand,
             children: [
               // Фон-картинка
-              Image.asset('assets/images/blue_fish_with_corals.jpg', fit: BoxFit.cover),
+              Image.asset(
+                'assets/images/blue_fish_with_corals.jpg',
+                fit: BoxFit.cover,
+              ),
               // Затемняющий градиент слева → вправо
               DecoratedBox(
                 decoration: BoxDecoration(
@@ -257,7 +265,7 @@ class _HeroLine extends StatelessWidget {
           fontSize: 16,
           height: 1.15,
           letterSpacing: .2,
-          color: Colors.white,
+          color:AppColors.white,
           shadows: const [
             Shadow(blurRadius: 8, color: Colors.black54, offset: Offset(0, 2)),
           ],
@@ -350,7 +358,7 @@ class _AdvCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.white.withValues(alpha: .6),
+            color: AppColors.white.withValues(alpha: .6),
             offset: const Offset(-2, -2),
             blurRadius: 6,
           ),
@@ -368,7 +376,7 @@ class _AdvCard extends StatelessWidget {
             width: 42,
             height: 42,
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: .85),
+              color: AppColors.white.withValues(alpha: .85),
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
@@ -387,15 +395,12 @@ class _AdvCard extends StatelessWidget {
               children: [
                 Text(
                   adv.title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontSize: 16,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 6),
                 Text(
                   adv.text,
-                  style: TextStyle(
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: cs.onSurface.withValues(alpha: .75),
                     height: 1.3,
                   ),
@@ -445,7 +450,7 @@ class _FeatureGrid extends StatelessWidget {
                   Expanded(
                     child: Text(
                       f.text,
-                      style: TextStyle(
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: cs.onSurface.withValues(alpha: .9),
                         height: 1.25,
                       ),
