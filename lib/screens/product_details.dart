@@ -15,10 +15,11 @@ class ProductDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final description = _cleanDescription(product.description);
 
     return Scaffold(
-      appBar: AppBar(title: const SizedBox.shrink(), centerTitle: false),
+      appBar: AppBar(title: const SizedBox.shrink()),
       body: SafeArea(
         bottom: false,
         child: SingleChildScrollView(
@@ -29,8 +30,7 @@ class ProductDetailsScreen extends StatelessWidget {
               Text(
                 product.title,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 20,
+                style: textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w900,
                   color: AppColors.deepBlue,
                 ),
@@ -38,7 +38,7 @@ class ProductDetailsScreen extends StatelessWidget {
               const SizedBox(height: 16),
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.white,
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [
                     BoxShadow(
@@ -96,7 +96,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 child: Text(
                   description.isEmpty ? 'Описание появится позже' : description,
-                  style: TextStyle(
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: cs.onSurface.withValues(alpha: .9),
                     height: 1.3,
                   ),
@@ -135,6 +135,7 @@ class _ContactCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Container(
       decoration: BoxDecoration(
@@ -152,14 +153,11 @@ class _ContactCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Уточнить подробности в магазине',
-            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 17),
-          ),
+          Text('Уточнить подробности в магазине', style: textTheme.titleMedium),
           const SizedBox(height: 8),
           Text(
             'Расскажите о вашем запросе, мы обязательно поможем сориентироваться',
-            style: TextStyle(
+            style: textTheme.bodyMedium?.copyWith(
               color: cs.onSurface.withValues(alpha: .7),
               height: 1.3,
             ),
