@@ -64,27 +64,30 @@ class ProductDetailsScreen extends StatelessWidget {
                             size: 64,
                             color: Colors.black26,
                           )
-                        : CachedNetworkImage(
-                            imageUrl: product.image!,
-                            fit: BoxFit.contain,
-                            placeholder: (_, __) => const Center(
-                              child: SizedBox(
-                                width: 24,
-                                height: 24,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
+                        : InteractiveViewer(
+                            minScale: 1.0,
+                            maxScale: 4.0,
+                            child: CachedNetworkImage(
+                              imageUrl: product.image!,
+                              fit: BoxFit.contain,
+                              placeholder: (_, __) => const Center(
+                                child: SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
                                 ),
                               ),
-                            ),
-                            errorWidget: (_, __, ___) => const Icon(
-                              Icons.broken_image_outlined,
-                              color: Colors.black26,
+                              errorWidget: (_, __, ___) => const Icon(
+                                Icons.broken_image_outlined,
+                                color: Colors.black26,
+                              ),
                             ),
                           ),
                   ),
                 ),
               ),
-
               const SizedBox(height: 24),
               Container(
                 decoration: BoxDecoration(
