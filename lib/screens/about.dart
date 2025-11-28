@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../utils/launcher_utils.dart';
 import '../widgets/yellow_button.dart';
+import '../utils/spacing.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key, this.onOpenCatalog});
@@ -27,7 +28,7 @@ class AboutScreen extends StatelessWidget {
               badgeText: 'Всем покупателям с сайта скидка 10%',
             ),
           ),
-          SliverToBoxAdapter(child: _gap12()),
+          const SliverToBoxAdapter(child: gap12),
 
           // О магазине + ассортимент (общий текст)
           SliverToBoxAdapter(
@@ -67,7 +68,7 @@ class AboutScreen extends StatelessWidget {
               ),
             ),
           ),
-          SliverToBoxAdapter(child: _gap12()),
+          const SliverToBoxAdapter(child: gap12),
 
           // Преимущества магазина (лист + коротко)
           SliverToBoxAdapter(
@@ -100,7 +101,7 @@ class AboutScreen extends StatelessWidget {
               ),
             ),
           ),
-          SliverToBoxAdapter(child: _gap12()),
+          const SliverToBoxAdapter(child: gap12),
 
           // Фишки/иконки с сайта (короткая сетка)
           const SliverToBoxAdapter(
@@ -117,7 +118,7 @@ class AboutScreen extends StatelessWidget {
               ),
             ),
           ),
-          SliverToBoxAdapter(child: _gap12()),
+          const SliverToBoxAdapter(child: gap12),
 
           // Категории (аккордеон)
           const SliverToBoxAdapter(
@@ -156,7 +157,7 @@ class AboutScreen extends StatelessWidget {
               ),
             ),
           ),
-          SliverToBoxAdapter(child: _gap12()),
+          const SliverToBoxAdapter(child: gap12),
 
           const SliverToBoxAdapter(
             child: _SurfaceCard(
@@ -191,7 +192,7 @@ class AboutScreen extends StatelessWidget {
               ),
             ),
           ),
-          SliverToBoxAdapter(child: _gap12()),
+          const SliverToBoxAdapter(child: gap12),
 
           // CTA в каталог
           SliverToBoxAdapter(
@@ -240,7 +241,7 @@ class AboutScreen extends StatelessWidget {
               ),
             ),
           ),
-          SliverToBoxAdapter(child: _gap12()),
+          const SliverToBoxAdapter(child: gap12),
 
           // Отзывы — только плейсхолдер
           SliverToBoxAdapter(
@@ -283,7 +284,7 @@ class AboutScreen extends StatelessWidget {
             ),
           ),
 
-          SliverToBoxAdapter(child: _gap16()),
+          const SliverToBoxAdapter(child: gap16),
           // Контакты/CTA
           SliverToBoxAdapter(
             child: _SurfaceCard(
@@ -648,6 +649,3 @@ class _FeatureGrid extends StatelessWidget {
     );
   }
 }
-
-Widget _gap12() => const SizedBox(height: 12);
-Widget _gap16() => const SizedBox(height: 16);

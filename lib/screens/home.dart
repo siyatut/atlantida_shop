@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../utils/launcher_utils.dart';
 import '../widgets/yellow_button.dart';
+import '../utils/spacing.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, this.onOpenCatalog});
@@ -17,7 +18,7 @@ class HomeScreen extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           const SliverToBoxAdapter(child: _HeroBannerLarge()),
-          SliverToBoxAdapter(child: _gap16()),
+          const SliverToBoxAdapter(child: gap16),
           SliverToBoxAdapter(
             child: _SurfaceCard(
               child: Column(
@@ -59,7 +60,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          SliverToBoxAdapter(child: _gap12()),
+          const SliverToBoxAdapter(child: gap12),
           // Преимущества
           const SliverToBoxAdapter(
             child: _SurfaceCard(
@@ -94,7 +95,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          SliverToBoxAdapter(child: _gap12()),
+          const SliverToBoxAdapter(child: gap12),
           // Качество и поставщики
           SliverToBoxAdapter(
             child: _SurfaceCard(
@@ -140,7 +141,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          SliverToBoxAdapter(child: _gap12()),
+          const SliverToBoxAdapter(child: gap12),
           const SliverToBoxAdapter(
             child: _SurfaceCard(
               child: Column(
@@ -180,7 +181,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          SliverToBoxAdapter(child: _gap16()),
+          const SliverToBoxAdapter(child: gap16),
           const SliverToBoxAdapter(child: SizedBox(height: 24)),
         ],
       ),
@@ -480,6 +481,3 @@ class _SectionTitle extends StatelessWidget {
     );
   }
 }
-
-Widget _gap12() => const SizedBox(height: 12);
-Widget _gap16() => const SizedBox(height: 16);
