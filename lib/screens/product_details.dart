@@ -20,23 +20,27 @@ class ProductDetailsScreen extends StatelessWidget {
     final description = fixPrepositions(_cleanDescription(product.description));
 
     return Scaffold(
-      appBar: AppBar(title: const SizedBox.shrink()),
+      appBar: AppBar(
+        centerTitle: true,
+        toolbarHeight: 72,
+        title: Text(
+          splitTitleInTwo(product.title),
+          textAlign: TextAlign.center,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.w900,
+            color: AppColors.deepBlue,
+            height: 1.15,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
-                splitTitleInTwo(product.title),
-                textAlign: TextAlign.center,
-                style: textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w900,
-                  color: AppColors.deepBlue,
-                  height: 1.15,
-                ),
-              ),
-              const SizedBox(height: 16),
               Container(
                 decoration: BoxDecoration(
                   color: AppColors.white,
