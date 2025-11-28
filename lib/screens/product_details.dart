@@ -29,10 +29,9 @@ class ProductDetailsScreen extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.w900,
-            color: AppColors.deepBlue,
-            height: 1.15,
-          ),
+  fontWeight: FontWeight.w900,
+  height: 1.15,
+),
         ),
       ),
       body: SafeArea(

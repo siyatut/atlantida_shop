@@ -72,7 +72,7 @@ class AppTheme {
         elevation: 0,
         scrolledUnderElevation: 0,
         backgroundColor: Colors.transparent,
-        foregroundColor: AppColors.deepBlue,
+        foregroundColor: AppColors.ink,
         surfaceTintColor: Colors.transparent,
         shadowColor: Colors.transparent,
         centerTitle: true,

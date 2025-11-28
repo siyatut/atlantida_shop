@@ -449,10 +449,7 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.w900,
-            color: AppColors.deepBlue,
-          ),
+      style: Theme.of(context).textTheme.titleMedium,
     );
   }
 }
