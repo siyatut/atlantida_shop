@@ -21,7 +21,7 @@ class AppColors {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [lightBlue, aqua, teal, deepBlue],
-    stops: [0.30, 0.50, 0.75, 0.90],
+    stops: [0.15, 0.45, 0.72, 0.95],
   );
 
   static const gradientOcean = LinearGradient(
