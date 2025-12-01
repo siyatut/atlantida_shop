@@ -172,6 +172,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
           ),
         if (!_loading && _error == null)
           Expanded(
+            child: SafeArea(
+    top: false,  
+    bottom: false, 
             child: RefreshIndicator(
               onRefresh: () => _load(reset: true),
 
@@ -233,6 +236,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                 itemCount: products.length + 1, // +1 под футер
               ),
             ),
+          ),
           ),
       ],
     );
