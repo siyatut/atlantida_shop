@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../data/woo/woo_repository.dart';
 import '../data/woo/woo_models.dart';
+import '../data/woo/woo_repository.dart';
 import '../domain/product.dart';
-import 'product_details.dart';
 import '../theme/app_colors.dart';
-import '../widgets/yellow_button.dart';
 import '../widgets/product_image_box.dart';
+import '../widgets/yellow_button.dart';
+import 'product_details.dart';
 
 class CatalogScreen extends StatefulWidget {
   const CatalogScreen({super.key, this.initialFilter});
@@ -173,70 +173,70 @@ class _CatalogScreenState extends State<CatalogScreen> {
         if (!_loading && _error == null)
           Expanded(
             child: SafeArea(
-    top: false,  
-    bottom: false, 
-            child: RefreshIndicator(
-              onRefresh: () => _load(reset: true),
+              top: false,
+              bottom: false,
+              child: RefreshIndicator(
+                onRefresh: () => _load(reset: true),
 
-              child: ListView.separated(
-                padding: const EdgeInsets.all(16),
-                itemBuilder: (_, i) {
-                  // последний элемент — футер «Показать ещё»
-                  if (i == products.length) {
-                    return _LoadMoreFooter(
-                      visible: _hasMore,
-                      loading: _loadingMore,
-                      onTap: () => _load(),
-                    );
-                  }
-                  final item = products[i];
-                  return _Card(
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 6),
-                        Expanded(child: _ProductImage(url: item.image)),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                item.title,
-                                // maxLines: 2,
-                                //  overflow: TextOverflow.ellipsis,
-                                style: textTheme.titleMedium?.copyWith(
-                                  color: const Color(0xFF17324A),
+                child: ListView.separated(
+                  padding: const EdgeInsets.all(16),
+                  itemBuilder: (_, i) {
+                    // последний элемент — футер «Показать ещё»
+                    if (i == products.length) {
+                      return _LoadMoreFooter(
+                        visible: _hasMore,
+                        loading: _loadingMore,
+                        onTap: () => _load(),
+                      );
+                    }
+                    final item = products[i];
+                    return _Card(
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 6),
+                          Expanded(child: _ProductImage(url: item.image)),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item.title,
+                                  // maxLines: 2,
+                                  //  overflow: TextOverflow.ellipsis,
+                                  style: textTheme.titleMedium?.copyWith(
+                                    color: const Color(0xFF17324A),
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(height: 8),
-                              _PriceText(price: item.price),
-                              const SizedBox(height: 12),
-                              YellowButton(
-                                text: 'Подробнее',
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) =>
-                                          ProductDetailsScreen(product: item),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
+                                const SizedBox(height: 8),
+                                _PriceText(price: item.price),
+                                const SizedBox(height: 12),
+                                YellowButton(
+                                  text: 'Подробнее',
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) =>
+                                            ProductDetailsScreen(product: item),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                      ],
-                    ),
-                  );
-                },
-                separatorBuilder: (_, i) => i < products.length - 1
-                    ? const SizedBox(height: 12)
-                    : const SizedBox.shrink(),
-                itemCount: products.length + 1, // +1 под футер
+                          const SizedBox(width: 8),
+                        ],
+                      ),
+                    );
+                  },
+                  separatorBuilder: (_, i) => i < products.length - 1
+                      ? const SizedBox(height: 12)
+                      : const SizedBox.shrink(),
+                  itemCount: products.length + 1, // +1 под футер
+                ),
               ),
             ),
-          ),
           ),
       ],
     );
@@ -337,10 +337,7 @@ class _ProductImage extends StatelessWidget {
   final String? url;
   @override
   Widget build(BuildContext context) {
-    return ProductImageBox(
-      imageUrl: url,
-      borderRadius: 12,
-    );
+    return ProductImageBox(imageUrl: url, borderRadius: 12);
   }
 }
 

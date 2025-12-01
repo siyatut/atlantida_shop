@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
                   const _SectionTitle('Зоомагазин в Нижнем Новгороде'),
                   const SizedBox(height: 6),
                   Text(
-                    '9 лет опыта. 3 000+ наименований.\nЛюбовь к питомцам начинается здесь!',
+                    '11 лет опыта. 3 000+ наименований.\nЛюбовь к питомцам начинается здесь!',
                     style: textTheme.bodyMedium?.copyWith(
                       color: cs.onSurface.withValues(alpha: .85),
                     ),
