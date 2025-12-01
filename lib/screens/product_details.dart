@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 import '../domain/product.dart';
 import '../theme/app_colors.dart';
@@ -7,6 +6,7 @@ import '../theme/app_colors.dart';
 import '../utils/launcher_utils.dart';
 import '../utils/text_utils.dart';
 import '../widgets/yellow_button.dart';
+import '../widgets/product_image_box.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   const ProductDetailsScreen({super.key, required this.product});
@@ -29,9 +29,9 @@ class ProductDetailsScreen extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: textTheme.titleLarge?.copyWith(
-  fontWeight: FontWeight.w900,
-  height: 1.15,
-),
+            fontWeight: FontWeight.w900,
+            height: 1.15,
+          ),
         ),
       ),
       body: SafeArea(
@@ -53,38 +53,8 @@ class ProductDetailsScreen extends StatelessWidget {
                   ],
                 ),
                 padding: const EdgeInsets.all(16),
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: (product.image == null || product.image!.isEmpty)
-                        ? const Icon(
-                            Icons.image_outlined,
-                            size: 64,
-                            color: Colors.black26,
-                          )
-                        : InteractiveViewer(
-                            minScale: 1.0,
-                            maxScale: 4.0,
-                            child: CachedNetworkImage(
-                              imageUrl: product.image!,
-                              fit: BoxFit.contain,
-                              placeholder: (_, __) => const Center(
-                                child: SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                  ),
-                                ),
-                              ),
-                              errorWidget: (_, __, ___) => const Icon(
-                                Icons.broken_image_outlined,
-                                color: Colors.black26,
-                              ),
-                            ),
-                          ),
-                  ),
+                child: ProductImageBox(
+                  imageUrl: product.image,
                 ),
               ),
               const SizedBox(height: 24),

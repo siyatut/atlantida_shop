@@ -6,8 +6,7 @@ import '../domain/product.dart';
 import 'product_details.dart';
 import '../theme/app_colors.dart';
 import '../widgets/yellow_button.dart';
-
-import 'package:cached_network_image/cached_network_image.dart';
+import '../widgets/product_image_box.dart';
 
 class CatalogScreen extends StatefulWidget {
   const CatalogScreen({super.key, this.initialFilter});
@@ -334,31 +333,9 @@ class _ProductImage extends StatelessWidget {
   final String? url;
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: Container(
-          color: Colors.grey.shade200,
-          child: (url == null || url!.isEmpty)
-              ? const Icon(Icons.image_outlined, color: Colors.black26)
-              : CachedNetworkImage(
-                  imageUrl: url!,
-                  fit: BoxFit.cover,
-                  placeholder: (_, __) => const Center(
-                    child: SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    ),
-                  ),
-                  errorWidget: (_, __, ___) => const Icon(
-                    Icons.broken_image_outlined,
-                    color: Colors.black26,
-                  ),
-                ),
-        ),
-      ),
+    return ProductImageBox(
+      imageUrl: url,
+      borderRadius: 12,
     );
   }
 }
