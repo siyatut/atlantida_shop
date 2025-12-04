@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
+import 'app_typography.dart';
 
 class AppTheme {
   // Светлая тема (Aqua Light)
@@ -18,52 +19,9 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: cs,
+      textTheme: AppTypography.lightTextTheme(cs),
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: AppColors.teal,
-      ),
-      textTheme: const TextTheme(
-        headlineSmall: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.w900,
-          height: 1.2,
-          color: AppColors.ink,
-        ),
-        titleLarge: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w800,
-          height: 1.2,
-          color: AppColors.ink,
-        ),
-        titleMedium: TextStyle(
-          fontSize: 17,
-          fontWeight: FontWeight.w800,
-          height: 1.25,
-          color: AppColors.ink,
-        ),
-        bodyLarge: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          height: 1.35,
-          color: AppColors.ink,
-        ),
-        bodyMedium: TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w500,
-          height: 1.35,
-          color: AppColors.ink,
-        ),
-        labelLarge: TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w800,
-          height: 1.2,
-          color: AppColors.ink,
-        ),
-        labelMedium: TextStyle(
-          fontSize: 13,
-          fontWeight: FontWeight.w600,
-          height: 1.2,
-          color: AppColors.softInk,
-        ),
       ),
 
       scaffoldBackgroundColor: Colors.transparent,
@@ -168,54 +126,9 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: cs,
-
+      textTheme: AppTypography.lightTextTheme(cs),
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: AppColors.teal,
-      ),
-
-      textTheme: const TextTheme(
-        headlineSmall: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.w900,
-          height: 1.2,
-          color: AppColors.white,
-        ),
-        titleLarge: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w800,
-          height: 1.2,
-          color: AppColors.white,
-        ),
-        titleMedium: TextStyle(
-          fontSize: 17,
-          fontWeight: FontWeight.w800,
-          height: 1.25,
-          color: AppColors.white,
-        ),
-        bodyLarge: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          height: 1.35,
-          color: AppColors.white,
-        ),
-        bodyMedium: TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w500,
-          height: 1.35,
-          color: AppColors.white,
-        ),
-        labelLarge: TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w800,
-          height: 1.2,
-          color: AppColors.white,
-        ),
-        labelMedium: TextStyle(
-          fontSize: 13,
-          fontWeight: FontWeight.w600,
-          height: 1.2,
-          color: Colors.white70,
-        ),
       ),
 
       scaffoldBackgroundColor: const Color(0xFF081524),
