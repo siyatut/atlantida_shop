@@ -17,8 +17,9 @@ class AquaScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gradient =
-        useDark ? AppColors.gradientOcean : AppColors.gradientAqua;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final gradient = isDark ? AppColors.gradientOcean : AppColors.gradientAqua;
 
     return Container(
       decoration: BoxDecoration(gradient: gradient),
