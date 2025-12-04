@@ -34,11 +34,13 @@ class ProductImageBox extends StatelessWidget {
             : CachedNetworkImage(
                 imageUrl: imageUrl!,
                 fit: fit,
-                placeholder: (_, __) => const Center(
+                placeholder: (_, __) => Center(
                   child: SizedBox(
                     width: 24,
                     height: 24,
-                    child: CircularProgressIndicator(strokeWidth: 2),
+                    child: CircularProgressIndicator(
+                      color: Theme.of(context).progressIndicatorTheme.color,
+                      strokeWidth: 2),
                   ),
                 ),
                 errorWidget: (_, __, ___) =>
