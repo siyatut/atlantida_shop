@@ -131,7 +131,7 @@ class AppTheme {
         color: AppColors.teal,
       ),
 
-      scaffoldBackgroundColor: const Color(0xFF081524),
+      scaffoldBackgroundColor: Colors.transparent,
 
       appBarTheme: const AppBarTheme(
         elevation: 0,

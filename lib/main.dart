@@ -24,10 +24,17 @@ class AtlantidaApp extends StatelessWidget {
       title: 'Атлантида',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
-      builder: (context, child) => DecoratedBox(
-        decoration: const BoxDecoration(gradient: AppColors.gradientAqua),
-        child: child ?? const SizedBox.shrink(),
-      ),
+      darkTheme: AppTheme.dark(),
+      builder: (context, child) {
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+
+        return DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: isDark ? AppColors.gradientOcean : AppColors.gradientAqua,
+          ),
+          child: child ?? const SizedBox.shrink(),
+        );
+      },
 
       home: const _RootTabs(),
     );
