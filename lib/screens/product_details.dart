@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../domain/product.dart';
 import '../theme/app_colors.dart';
-
+import '../domain/product.dart';
 import '../utils/launcher_utils.dart';
 import '../utils/text_utils.dart';
 import '../widgets/yellow_button.dart';
 import '../widgets/product_image_box.dart';
+
+Color _cardBg(BuildContext context) =>
+    Theme.of(context).colorScheme.surface.withValues(alpha: .95);
 
 class ProductDetailsScreen extends StatelessWidget {
   const ProductDetailsScreen({super.key, required this.product});
@@ -17,6 +19,8 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     final description = fixPrepositions(_cleanDescription(product.description));
 
     return Scaffold(
@@ -42,7 +46,7 @@ class ProductDetailsScreen extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.white,
+                  color: isDark ? _cardBg(context) : AppColors.white,
                   borderRadius: BorderRadius.circular(24),
                   boxShadow: [
                     BoxShadow(
@@ -53,14 +57,12 @@ class ProductDetailsScreen extends StatelessWidget {
                   ],
                 ),
                 padding: const EdgeInsets.all(16),
-                child: ProductImageBox(
-                  imageUrl: product.image,
-                ),
+                child: ProductImageBox(imageUrl: product.image),
               ),
               const SizedBox(height: 24),
               Container(
                 decoration: BoxDecoration(
-                  color: cs.surface.withValues(alpha: .95),
+                  color: _cardBg(context),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
@@ -137,7 +139,7 @@ class _ContactCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: cs.surface.withValues(alpha: .95),
+        color: _cardBg(context),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
