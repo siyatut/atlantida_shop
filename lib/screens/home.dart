@@ -4,6 +4,9 @@ import '../utils/launcher_utils.dart';
 import '../widgets/yellow_button.dart';
 import '../utils/spacing.dart';
 
+Color _cardBg(BuildContext context) =>
+    Theme.of(context).colorScheme.surface.withValues(alpha: .9);
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key, this.onOpenCatalog});
 
@@ -81,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                         icon: Icons.attach_money,
                         title: 'Держим низкие цены',
                         text:
-                            'Более 9 лет мы предлагаем товары по доступным ценам.',
+                            'Более 11 лет мы предлагаем товары по доступным ценам.',
                       ),
                       _Adv(
                         icon: Icons.inventory_2_outlined,
@@ -284,14 +287,14 @@ class _SurfaceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
+    
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: cs.surface.withValues(alpha: .9),
+          color: _cardBg(context),
           borderRadius: BorderRadius.circular(18),
           boxShadow: const [
             BoxShadow(
@@ -322,7 +325,6 @@ class _AdvList extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        // две колонки, если ширина контейнера > 380
         final twoCols = constraints.maxWidth > 380;
         final gap = 12.0;
         final itemWidth = twoCols
@@ -357,11 +359,11 @@ class _AdvCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: cs.surface.withValues(alpha: .85),
+        color: _cardBg(context),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: AppColors.white.withValues(alpha: .6),
+            color: AppColors.white.withValues(alpha: .06),
             offset: const Offset(-2, -2),
             blurRadius: 6,
           ),
@@ -379,7 +381,7 @@ class _AdvCard extends StatelessWidget {
             width: 42,
             height: 42,
             decoration: BoxDecoration(
-              color: AppColors.white.withValues(alpha: .85),
+              color: cs.surface.withValues(alpha: .95),
               shape: BoxShape.circle,
               boxShadow: [
                 BoxShadow(
