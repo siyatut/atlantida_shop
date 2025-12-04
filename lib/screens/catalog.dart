@@ -130,6 +130,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
   Widget build(BuildContext context) {
     final products = _items;
     final textTheme = Theme.of(context).textTheme;
+    final cs = Theme.of(context).colorScheme;
 
     return Column(
       children: [
@@ -205,7 +206,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                                   // maxLines: 2,
                                   //  overflow: TextOverflow.ellipsis,
                                   style: textTheme.titleMedium?.copyWith(
-                                    color: const Color(0xFF17324A),
+                                    color: cs.onSurface,
                                   ),
                                 ),
                                 const SizedBox(height: 8),
@@ -257,6 +258,7 @@ class _LoadMoreFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final cs = Theme.of(context).colorScheme;
 
     if (!visible) return const SizedBox.shrink();
 
@@ -281,8 +283,9 @@ class _LoadMoreFooter extends StatelessWidget {
             onPressed: onTap,
             style: ElevatedButton.styleFrom(
               elevation: 0,
-              backgroundColor: AppColors.white.withValues(alpha: .95),
-              foregroundColor: AppColors.deepBlue,
+              backgroundColor: cs.surface.withValues(alpha: .95),
+              foregroundColor: cs.onSurface,
+              side: BorderSide(color: cs.onSurface.withValues(alpha: .25)),
               padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
@@ -314,9 +317,10 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.white,
+        color: cs.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -383,6 +387,7 @@ class _DynamicFilters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final cs = Theme.of(context).colorScheme;
 
     if (categories.isEmpty) {
       return const Padding(
@@ -426,7 +431,7 @@ class _DynamicFilters extends StatelessWidget {
               color: selected ? AppColors.white : AppColors.deepBlue,
             ),
             selectedColor: AppColors.teal,
-            backgroundColor: AppColors.white.withValues(alpha: .95),
+            backgroundColor: cs.surface.withValues(alpha: .95),
             side: BorderSide(
               color: selected ? AppColors.teal : Colors.transparent,
             ),
