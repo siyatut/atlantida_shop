@@ -257,16 +257,18 @@ class _HeroLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final cs = Theme.of(context).colorScheme;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 1),
       child: Text(
         text,
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+        style: textTheme.titleMedium?.copyWith(
           fontWeight: FontWeight.w900,
-          fontSize: 16,
           height: 1.15,
           letterSpacing: .2,
-          color:AppColors.white,
+          color:cs.onPrimary,
           shadows: const [
             Shadow(blurRadius: 8, color: Colors.black54, offset: Offset(0, 2)),
           ],
@@ -475,9 +477,7 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: Theme.of(
-        context,
-      ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w900),
+      style: Theme.of(context).textTheme.titleMedium,
     );
   }
 }
