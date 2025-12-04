@@ -518,7 +518,6 @@ class _AccordionItem extends StatelessWidget {
         title: Text(
           title,
           style: textTheme.titleSmall?.copyWith(
-            fontWeight: FontWeight.w800,
             color: AppColors.deepBlue,
           ),
         ),
@@ -573,7 +572,6 @@ class _CategoryCard extends StatelessWidget {
                 Text(
                   title,
                   style: textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w900,
                     color: AppColors.deepBlue,
                   ),
                 ),

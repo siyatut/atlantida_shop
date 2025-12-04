@@ -25,6 +25,13 @@ class AppTypography {
           height: 1.25,
           color: cs.onSurface,
         ),
+        titleSmall: TextStyle(
+          fontFamily: _baseFamily,
+          fontSize: 16,
+          fontWeight: FontWeight.w800,
+          height: 1.25,
+          color: cs.onSurface,
+        ),
         bodyLarge: TextStyle(
           fontFamily: _baseFamily,
           fontSize: 16,
