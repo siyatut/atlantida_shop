@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import '../utils/launcher_utils.dart';
-import '../widgets/yellow_button.dart';
 import '../utils/spacing.dart';
+import '../utils/text_utils.dart';
+import '../widgets/yellow_button.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key, this.onOpenCatalog});
@@ -15,50 +16,64 @@ class AboutScreen extends StatelessWidget {
     final cs = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
+    final heroTitle = fixPrepositions(
+      'Не откладывайте заботу о вашем питомце на потом!',
+    );
+    final heroSubtitle = fixPrepositions(
+      'Посетите магазин зоотоваров Атлантида в Нижнем Новгороде сегодня и найдите все необходимое для вашего любимца. '
+      'Мы гарантируем, что вы останетесь довольны качеством наших товаров и услуг!',
+    );
+
     return SafeArea(
       child: CustomScrollView(
         slivers: [
-          const SliverToBoxAdapter(
-            child: _HeroCard(
-              title: 'Посетите наш магазин сегодня!',
-              subtitle:
-                  'Не откладывайте заботу о вашем питомце на потом. '
-                  'Посетите магазин зоотоваров Атлантида в Нижнем Новгороде сегодня и найдите все необходимое для вашего любимца. '
-                  'Мы гарантируем, что вы останетесь довольны качеством наших товаров и услуг!',
-              badgeText: 'Всем покупателям с сайта скидка 10%',
-            ),
+          SliverToBoxAdapter(
+            child: _HeroCard(title: heroTitle, subtitle: heroSubtitle),
           ),
+
+          SliverToBoxAdapter(child: vGap(10)),
+          const SliverToBoxAdapter(child: _DiscountBanner()),
           const SliverToBoxAdapter(child: gap12),
 
-          // О магазине + ассортимент (общий текст)
+          // О магазине + ассортимент
           SliverToBoxAdapter(
             child: _SurfaceCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const _SectionTitle(
-                    'Широкий ассортимент товаров для вашего питомца',
+                  _SectionTitle(
+                    splitTitleInTwo(
+                      fixPrepositions(
+                        'Широкий ассортимент товаров для вашего питомца',
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 8),
+                  gap8,
                   Text(
-                    'Зоотовары «Атлантида» в Нижнем Новгороде: Ваш лучший выбор для заботы о питомце!',
+                    fixPrepositions(
+                      'Зоотовары «Атлантида» в Нижнем Новгороде: Ваш лучший выбор для заботы о питомце!',
+                    ),
                     style: textTheme.bodyMedium?.copyWith(
                       color: cs.onSurface.withValues(alpha: .9),
                       height: 1.35,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  gap8,
                   Text(
-                    'Владеть домашним питомцем — это большая ответственность, и каждый заботливый владелец желает предоставить своему питомцу все необходимое для его удовлетворения. '
-                    'Магазин зоотоваров Атлантида в Нижнем Новгороде существует, чтобы помочь вам в этом!',
+                    fixPrepositions(
+                      'Владеть домашним питомцем — это большая ответственность, и каждый заботливый владелец желает предоставить своему питомцу все необходимое для его удовлетворения. '
+                      'Магазин зоотоваров Атлантида в Нижнем Новгороде существует, чтобы помочь вам в этом!',
+                    ),
                     style: textTheme.bodyMedium?.copyWith(
                       color: cs.onSurface.withValues(alpha: .85),
                       height: 1.35,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  gap8,
                   Text(
-                    'Предлагаем большой выбор зоотоваров, все необходимое для жизни и досуга вашего питомца',
+                    fixPrepositions(
+                      'Предлагаем большой выбор зоотоваров, все необходимое для жизни и досуга вашего питомца',
+                    ),
                     style: textTheme.bodyMedium?.copyWith(
                       color: cs.onSurface.withValues(alpha: .85),
                       height: 1.35,
@@ -70,16 +85,20 @@ class AboutScreen extends StatelessWidget {
           ),
           const SliverToBoxAdapter(child: gap12),
 
-          // Преимущества магазина (лист + коротко)
+          // Преимущества магазина
           SliverToBoxAdapter(
             child: _SurfaceCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const _SectionTitle(
-                    'Почему выбирают магазин зоотоваров Атлантида?',
+                  _SectionTitle(
+                    splitTitleInTwo(
+                      fixPrepositions(
+                        'Почему выбирают магазин зоотоваров Атлантида?',
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 12),
+                  gap12,
                   const _Bullets(
                     items: [
                       'Широкий ассортимент товаров для разных видов питомцев',
@@ -88,10 +107,12 @@ class AboutScreen extends StatelessWidget {
                       'Доступные цены и регулярные акции и скидки',
                     ],
                   ),
-                  const SizedBox(height: 12),
+                  gap12,
                   Text(
-                    'Магазин Атлантида — предлагаем разнообразный выбор зоотоваров и сопутствующих товаров, '
-                    'которые удовлетворят все потребности вашего питомца.',
+                    fixPrepositions(
+                      'Магазин Атлантида — предлагаем разнообразный выбор зоотоваров и сопутствующих товаров, '
+                      'которые удовлетворят все потребности вашего питомца.',
+                    ),
                     style: textTheme.bodyMedium?.copyWith(
                       color: cs.onSurface.withValues(alpha: .85),
                       height: 1.35,
@@ -103,16 +124,31 @@ class AboutScreen extends StatelessWidget {
           ),
           const SliverToBoxAdapter(child: gap12),
 
-          // Фишки/иконки с сайта (короткая сетка)
+          // Фишки/иконки
           const SliverToBoxAdapter(
             child: _SurfaceCard(
               child: _FeatureGrid(
                 items: [
-                  _Feature(icon: Icons.water_outlined, text: 'Аксессуары и аквариумы'),
-                  _Feature(icon: Icons.pets_outlined, text: 'В продаже живые рыбки и растения'),
-                  _Feature(icon: Icons.shopping_cart_outlined, text: 'Большой ассортимент товаров'),
-                  _Feature(icon: Icons.support_agent_outlined, text: 'Профессиональные консультанты'),
-                  _Feature(icon: Icons.favorite_outline, text: 'Клиентоориентированный подход'),
+                  _Feature(
+                    icon: Icons.water_outlined,
+                    text: 'Аксессуары и аквариумы',
+                  ),
+                  _Feature(
+                    icon: Icons.pets_outlined,
+                    text: 'В продаже живые рыбки и растения',
+                  ),
+                  _Feature(
+                    icon: Icons.shopping_cart_outlined,
+                    text: 'Большой ассортимент товаров',
+                  ),
+                  _Feature(
+                    icon: Icons.support_agent_outlined,
+                    text: 'Профессиональные консультанты',
+                  ),
+                  _Feature(
+                    icon: Icons.favorite_outline,
+                    text: 'Клиентоориентированный подход',
+                  ),
                   _Feature(icon: Icons.attach_money, text: 'Доступные цены'),
                 ],
               ),
@@ -121,37 +157,45 @@ class AboutScreen extends StatelessWidget {
           const SliverToBoxAdapter(child: gap12),
 
           // Категории (аккордеон)
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: _SurfaceCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _SectionTitle('Зоотовары для различных видов животных'),
-                  SizedBox(height: 8),
+                  _SectionTitle(
+                    fixPrepositions('Зоотовары для различных видов животных'),
+                  ),
+                  gap8,
                   _AccordionItem(
-                    title: 'Товары для всех видов домашних животных',
-                    text:
-                        'Товары для всех видов домашних животных, включая собак, кошек, грызунов, птиц, рептилий и рыбок. '
-                        'У нас есть все, что нужно вашему питомцу для комфортной и здоровой жизни.',
+                    title: fixPrepositions(
+                      'Товары для всех видов домашних животных',
+                    ),
+                    text: fixPrepositions(
+                      'Товары для всех видов домашних животных, включая собак, кошек, грызунов, птиц, рептилий и рыбок. '
+                      'У нас есть все, что нужно вашему питомцу для комфортной и здоровой жизни.',
+                    ),
                   ),
                   _AccordionItem(
-                    title: 'Аквариумы и оборудование',
-                    text:
-                        'Если вы являетесь поклонником аквариумных рыбок, то у нас есть все, что нужно для создания прекрасного мира под водой. '
-                        'Широкий выбор аквариумов разных размеров и форм, а также различное оборудование, включая насосы, фильтры, нагреватели и освещение.',
+                    title: fixPrepositions('Аквариумы и оборудование'),
+                    text: fixPrepositions(
+                      'Если вы являетесь поклонником аквариумных рыбок, то у нас есть все, что нужно для создания прекрасного мира под водой. '
+                      'Широкий выбор аквариумов разных размеров и форм, а также различное оборудование, включая насосы, фильтры, нагреватели и освещение.',
+                    ),
                   ),
                   _AccordionItem(
-                    title: 'Корма для животных',
-                    text:
-                        'Мы понимаем, что правильное питание — это один из ключевых аспектов здоровья вашего питомца. '
-                        'Поэтому в нашем магазине вы найдете широкий выбор кормов для всех видов животных. '
-                        'У нас есть корма для собак и кошек разных пород и возрастов, а также корма для грызунов, птиц, рептилий и рыбок.',
+                    title: fixPrepositions('Корма для животных'),
+                    text: fixPrepositions(
+                      'Мы понимаем, что правильное питание — это один из ключевых аспектов здоровья вашего питомца. '
+                      'Поэтому в нашем магазине вы найдете широкий выбор кормов для всех видов животных. '
+                      'У нас есть корма для собак и кошек разных пород и возрастов, а также корма для грызунов, птиц, рептилий и рыбок.',
+                    ),
                   ),
                   _AccordionItem(
-                    title: 'Сопутствующие товары',
-                    text:
-                        'Наш магазин также предлагает различные товары, такие как наполнители для туалетов, миски, поводки, игрушки и многое другое. '
-                        'У нас есть все необходимое, чтобы сделать жизнь вашего питомца более комфортной и интересной.',
+                    title: fixPrepositions('Сопутствующие товары'),
+                    text: fixPrepositions(
+                      'Наш магазин также предлагает различные товары, такие как наполнители для туалетов, миски, поводки, игрушки и многое другое. '
+                      'У нас есть все необходимое, чтобы сделать жизнь вашего питомца более комфортной и интересной.',
+                    ),
                   ),
                 ],
               ),
@@ -159,33 +203,40 @@ class AboutScreen extends StatelessWidget {
           ),
           const SliverToBoxAdapter(child: gap12),
 
-          const SliverToBoxAdapter(
+          // Категории (карточки)
+          SliverToBoxAdapter(
             child: _SurfaceCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _SectionTitle('Зоотовары для различных видов животных'),
-                  SizedBox(height: 12),
+                  _SectionTitle(
+                    fixPrepositions('Зоотовары для различных видов животных'),
+                  ),
+                  gap12,
                   _CategoryCard(
-                    title: 'Для рыб',
-                    text:
-                        'В наличии представлены различные рыбы, а также аквариумы, грунт, растения и многое другое. '
-                        'Вас порадует большой ассортимент и приятные цены. '
-                        'При покупке аквариума от 5000 рублей – действует доставка.',
+                    title: fixPrepositions('Для рыб'),
+                    text: fixPrepositions(
+                      'В наличии представлены различные рыбы, а также аквариумы, грунт, растения и многое другое. '
+                      'Вас порадует большой ассортимент и приятные цены. '
+                      'При покупке аквариума от 5000 рублей – действует доставка.',
+                    ),
                     icon: Icons.water_outlined,
                   ),
-                  SizedBox(height: 10),
+                  vGap(10),
                   _CategoryCard(
-                    title: 'Для грызунов и птиц',
-                    text: 'Вы найдете большой ассортимент клеток и кормов.',
+                    title: fixPrepositions('Для грызунов и птиц'),
+                    text: fixPrepositions(
+                      'Вы найдете большой ассортимент клеток и кормов.',
+                    ),
                     icon: Icons.flutter_dash_outlined,
                   ),
-                  SizedBox(height: 10),
+                  vGap(10),
                   _CategoryCard(
-                    title: 'Для собак и кошек',
-                    text:
-                        'В ассортименте вы найдете корма и лакомства, ошейники, лотки. '
-                        'Наши продавцы всегда помогут вам с выбором и расскажут все о составлении рациона в зависимости от породы питомца.',
+                    title: fixPrepositions('Для собак и кошек'),
+                    text: fixPrepositions(
+                      'В ассортименте вы найдете корма и лакомства, ошейники, лотки. '
+                      'Наши продавцы всегда помогут вам с выбором и расскажут все о составлении рациона в зависимости от породы питомца.',
+                    ),
                     icon: Icons.pets_outlined,
                   ),
                 ],
@@ -194,113 +245,24 @@ class AboutScreen extends StatelessWidget {
           ),
           const SliverToBoxAdapter(child: gap12),
 
-          // CTA в каталог
-          SliverToBoxAdapter(
-            child: _SurfaceCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'ИЩИТЕ ЛУЧШЕЕ ДЛЯ СВОЕГО ПИТОМЦА?',
-                    style: textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w900,
-                      color: AppColors.deepBlue,
-                      height: 1.2,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'ЗООТОВАРЫ АТЛАНТИДА - КАЧЕСТВО КОТОРОЕ ЗАСЛУЖИВАЕТ ВАШ ДРУГ.\n'
-                    'УЗНАЙТЕ БОЛЬШЕ! ЗАГЛЯНИТЕ В НАШ КАТАЛОГ НА САЙТЕ!',
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: cs.onSurface.withValues(alpha: .85),
-                      height: 1.35,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: OutlinedButton.icon(
-                      onPressed: () => onOpenCatalog?.call(),
-                      icon: const Icon(Icons.storefront_outlined),
-                      label: Text('Перейти в каталог', style: textTheme.labelLarge),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: AppColors.deepBlue,
-                        side: const BorderSide(color: AppColors.deepBlue),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SliverToBoxAdapter(child: gap12),
-
-          // Отзывы — только плейсхолдер
-          SliverToBoxAdapter(
-            child: _SurfaceCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const _SectionTitle('Отзывы наших клиентов'),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Здесь будут отзывы покупателей. '
-                    'Подключим подгрузку из источника, где они сейчас хранятся.',
-                    style: textTheme.bodyMedium?.copyWith(
-                      color: cs.onSurface.withValues(alpha: .85),
-                      height: 1.3,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  // Заглушка под ленту/карусель отзывов
-                  Container(
-                    height: 120,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: cs.surface.withValues(alpha: .7),
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(
-                        color: AppColors.deepBlue.withValues(alpha: .08),
-                      ),
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Карусель отзывов (MVP позже)',
-                      style: textTheme.bodyMedium?.copyWith(
-                        color: cs.onSurface.withValues(alpha: .6),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          const SliverToBoxAdapter(child: gap16),
-          // Контакты/CTA
+          // Контакты / CTA
           SliverToBoxAdapter(
             child: _SurfaceCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const _SectionTitle('Связаться с нами'),
-                  const SizedBox(height: 8),
+                  gap8,
                   Text(
-                    'Если нужна помощь с выбором — позвоните или напишите нам.',
+                    fixPrepositions(
+                      'Если нужна помощь с выбором — позвоните или напишите нам.',
+                    ),
                     style: textTheme.bodyMedium?.copyWith(
                       color: cs.onSurface.withValues(alpha: .85),
                       height: 1.3,
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  gap12,
                   Row(
                     children: [
                       Expanded(
@@ -310,7 +272,7 @@ class AboutScreen extends StatelessWidget {
                           onTap: () => makePhoneCall('+79625046096'),
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      hGap(12),
                       Expanded(
                         child: YellowButton(
                           text: 'Написать',
@@ -329,7 +291,7 @@ class AboutScreen extends StatelessWidget {
             ),
           ),
 
-          const SliverToBoxAdapter(child: SizedBox(height: 24)),
+          const SliverToBoxAdapter(child: gap24),
         ],
       ),
     );
@@ -337,15 +299,10 @@ class AboutScreen extends StatelessWidget {
 }
 
 class _HeroCard extends StatelessWidget {
-  const _HeroCard({
-    required this.title,
-    required this.subtitle,
-    required this.badgeText,
-  });
+  const _HeroCard({required this.title, required this.subtitle});
 
   final String title;
   final String subtitle;
-  final String badgeText;
 
   @override
   Widget build(BuildContext context) {
@@ -355,57 +312,90 @@ class _HeroCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
       child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [AppColors.lightBlue, AppColors.teal],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
+          color: cs.surface.withValues(alpha: .9),
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: const [
             BoxShadow(
-              color: Colors.black.withValues(alpha: .18),
+              color: Colors.black26,
               blurRadius: 16,
-              offset: const Offset(0, 8),
+              offset: Offset(0, 8),
             ),
           ],
         ),
-        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               title,
-              style: textTheme.titleLarge?.copyWith(
+              style: textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w900,
-                color: AppColors.white,
-                height: 1.15,
+                color: cs.onSurface,
+                height: 1.2,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               subtitle,
               style: textTheme.bodyMedium?.copyWith(
-                color: AppColors.white.withValues(alpha: .92),
+                color: cs.onSurface.withValues(alpha: .85),
                 height: 1.35,
               ),
             ),
-            const SizedBox(height: 12),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              decoration: BoxDecoration(
-                color: cs.surface.withValues(alpha: .95),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                badgeText,
-                style: textTheme.labelLarge?.copyWith(
-                  fontWeight: FontWeight.w800,
-                  color: AppColors.deepBlue,
-                ),
-              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DiscountBanner extends StatelessWidget {
+  const _DiscountBanner();
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final edge1 = AppColors.aqua.withValues(alpha: isDark ? .18 : .10);
+    final edge2 = AppColors.teal.withValues(alpha: isDark ? .16 : .08);
+    final mid = cs.surface.withValues(alpha: isDark ? .92 : .97);
+    final borderColor = AppColors.aqua.withValues(alpha: isDark ? .35 : .18);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [edge1, mid, edge2],
+            stops: const [0.0, 0.5, 1.0],
+          ),
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: borderColor, width: 1.2),
+          boxShadow: [
+            // делаем тень спокойнее, чтобы не давала "черной рамки"
+            BoxShadow(
+              color: Colors.black.withValues(alpha: isDark ? .25 : .07),
+              blurRadius: 16,
+              offset: const Offset(0, 8),
             ),
           ],
+        ),
+        child: Center(
+          child: Text(
+            'Всем покупателям\nиз приложения скидка 10%',
+            textAlign: TextAlign.center,
+            style: textTheme.titleSmall?.copyWith(
+              fontWeight: FontWeight.w800,
+              color: cs.onSurface,
+              height: 1.2,
+            ),
+          ),
         ),
       ),
     );
@@ -447,10 +437,7 @@ class _SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: Theme.of(context).textTheme.titleMedium,
-    );
+    return Text(text, style: Theme.of(context).textTheme.titleMedium);
   }
 }
 
@@ -481,7 +468,7 @@ class _Bullets extends StatelessWidget {
                   ),
                   Expanded(
                     child: Text(
-                      e,
+                      fixPrepositions(e),
                       style: textTheme.bodyMedium?.copyWith(
                         color: cs.onSurface.withValues(alpha: .88),
                         height: 1.35,
@@ -517,9 +504,7 @@ class _AccordionItem extends StatelessWidget {
         collapsedIconColor: AppColors.deepBlue,
         title: Text(
           title,
-          style: textTheme.titleSmall?.copyWith(
-            color: AppColors.deepBlue,
-          ),
+          style: textTheme.titleSmall?.copyWith(color: AppColors.deepBlue),
         ),
         children: [
           Text(
@@ -556,15 +541,13 @@ class _CategoryCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: cs.surface.withValues(alpha: .85),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: AppColors.deepBlue.withValues(alpha: .08),
-        ),
+        border: Border.all(color: AppColors.deepBlue.withValues(alpha: .08)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: AppColors.deepBlue),
-          const SizedBox(width: 10),
+          hGap(10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -575,7 +558,7 @@ class _CategoryCard extends StatelessWidget {
                     color: AppColors.deepBlue,
                   ),
                 ),
-                const SizedBox(height: 6),
+                gap8,
                 Text(
                   text,
                   style: textTheme.bodyMedium?.copyWith(
@@ -625,10 +608,10 @@ class _FeatureGrid extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(f.icon, color: AppColors.deepBlue, size: 20),
-                  const SizedBox(width: 8),
+                  hGap(8),
                   Expanded(
                     child: Text(
-                      f.text,
+                      fixPrepositions(f.text),
                       style: textTheme.bodyMedium?.copyWith(
                         color: cs.onSurface.withValues(alpha: .9),
                         height: 1.25,
