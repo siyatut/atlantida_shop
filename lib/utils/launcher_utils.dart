@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 Future<void> makePhoneCall(String phoneNumber) async {
   final Uri uri = Uri(scheme: 'tel', path: phoneNumber);
   if (await canLaunchUrl(uri)) {
-    await launchUrl(uri);
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   } else {
     throw 'Could not launch $phoneNumber';
   }
@@ -24,7 +24,7 @@ Future<void> sendEmail({
   );
 
   if (await canLaunchUrl(uri)) {
-    await launchUrl(uri);
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   } else {
     throw 'Could not send email to $email';
   }
