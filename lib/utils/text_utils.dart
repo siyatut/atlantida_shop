@@ -4,6 +4,11 @@ String splitTitleInTwo(String title) {
   final words = t.split(' ');
   if (words.length <= 1) return t;
 
+  const maxWordLen = 18; 
+  if (words.any((w) => w.length >= maxWordLen)) {
+    return t; // не делим, оставляем одной строкой
+  }
+
   final totalLen = t.length;
   int bestIndex = 1;
   double bestDiff = double.infinity;
