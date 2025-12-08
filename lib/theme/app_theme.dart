@@ -19,7 +19,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: cs,
-      textTheme: AppTypography.lightTextTheme(cs),
+      textTheme: AppTypography.textTheme(cs),
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: AppColors.teal,
       ),
@@ -126,7 +126,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorScheme: cs,
-      textTheme: AppTypography.lightTextTheme(cs),
+      textTheme: AppTypography.textTheme(cs),
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: AppColors.teal,
       ),

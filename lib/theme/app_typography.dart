@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppTypography {
   static const _baseFamily = 'SF Pro Display'; 
 
-  static TextTheme lightTextTheme(ColorScheme cs) => TextTheme(
+  static TextTheme textTheme(ColorScheme cs) => TextTheme(
         headlineSmall: TextStyle(
           fontFamily: _baseFamily,
           fontSize: 22,
