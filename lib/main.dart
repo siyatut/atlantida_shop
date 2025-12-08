@@ -66,12 +66,16 @@ class _RootTabsState extends State<_RootTabs> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          systemOverlayStyle: SystemUiOverlayStyle.dark,
+          systemOverlayStyle: isDark
+              ? SystemUiOverlayStyle.light
+              : SystemUiOverlayStyle.dark,
           title: Text(switch (_index) {
             0 => 'Главная',
             1 => 'Каталог',
