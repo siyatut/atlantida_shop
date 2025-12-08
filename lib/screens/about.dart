@@ -5,6 +5,7 @@ import '../utils/launcher_utils.dart';
 import '../utils/spacing.dart';
 import '../utils/text_utils.dart';
 import '../widgets/yellow_button.dart';
+import '../core/app_contacts.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key, this.onOpenCatalog});
@@ -269,7 +270,7 @@ class AboutScreen extends StatelessWidget {
                         child: YellowButton(
                           text: 'Позвонить',
                           icon: Icons.call,
-                          onTap: () => makePhoneCall('+79625046096'),
+                          onTap: () => makePhoneCall(AppContacts.phone),
                         ),
                       ),
                       hGap(12),
@@ -278,7 +279,7 @@ class AboutScreen extends StatelessWidget {
                           text: 'Написать',
                           icon: Icons.email_outlined,
                           onTap: () => sendEmail(
-                            email: 'gagin645@yandex.ru',
+                            email: AppContacts.email,
                             subject: 'Вопрос из приложения',
                             body: 'Здравствуйте! Хочу уточнить детали…',
                           ),

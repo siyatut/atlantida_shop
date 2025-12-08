@@ -6,6 +6,7 @@ import '../utils/launcher_utils.dart';
 import '../utils/text_utils.dart';
 import '../widgets/yellow_button.dart';
 import '../widgets/product_image_box.dart';
+import '../core/app_contacts.dart';
 
 Color _cardBg(BuildContext context) =>
     Theme.of(context).colorScheme.surface.withValues(alpha: .95);
@@ -169,7 +170,7 @@ class _ContactCard extends StatelessWidget {
                 child: YellowButton(
                   text: 'Позвонить',
                   icon: Icons.call,
-                  onTap: () => makePhoneCall('+79625046096'),
+                  onTap: () => makePhoneCall(AppContacts.phone),
                 ),
               ),
               const SizedBox(width: 12),
@@ -178,7 +179,7 @@ class _ContactCard extends StatelessWidget {
                   text: 'Написать',
                   icon: Icons.email_outlined,
                   onTap: () => sendEmail(
-                    email: 'gagin645@yandex.ru',
+                    email: AppContacts.email,
                     subject: 'Вопрос по товару из приложения',
                     body:
                         'Здравствуйте! Хочу уточнить наличие и стоимость товара «$productTitle».',
