@@ -47,8 +47,6 @@ class AboutScreen extends StatelessWidget {
           SliverToBoxAdapter(
             child: _HeroCard(title: heroTitle, subtitle: heroSubtitle),
           ),
-          SliverToBoxAdapter(child: vGap(10)),
-          const SliverToBoxAdapter(child: _DiscountBanner()),
           const SliverToBoxAdapter(child: gap12),
 
           // 1) О магазине + ассортимент (коротко)
@@ -326,56 +324,6 @@ class _HeroCard extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _DiscountBanner extends StatelessWidget {
-  const _DiscountBanner();
-
-  @override
-  Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    final edge1 = AppColors.aqua.withValues(alpha: isDark ? .18 : .10);
-    final edge2 = AppColors.teal.withValues(alpha: isDark ? .16 : .08);
-    final mid = cs.surface.withValues(alpha: isDark ? .92 : .97);
-    final borderColor = AppColors.aqua.withValues(alpha: isDark ? .35 : .18);
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [edge1, mid, edge2],
-            stops: const [0.0, 0.5, 1.0],
-          ),
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: borderColor, width: 1.2),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: isDark ? .25 : .07),
-              blurRadius: 16,
-              offset: const Offset(0, 8),
-            ),
-          ],
-        ),
-        child: Center(
-          child: Text(
-            'Всем покупателям\nиз приложения скидка 10%',
-            textAlign: TextAlign.center,
-            style: textTheme.titleSmall?.copyWith(
-              fontWeight: FontWeight.w800,
-              color: cs.onSurface,
-              height: 1.2,
-            ),
-          ),
         ),
       ),
     );
