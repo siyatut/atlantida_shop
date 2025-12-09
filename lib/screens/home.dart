@@ -118,27 +118,26 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  Align(
-                    alignment: Alignment.centerLeft,
+                  SizedBox(
+                    width: double.infinity,
                     child: OutlinedButton.icon(
-                      onPressed: () {
-                        onOpenCatalog?.call();
-                      },
-                      icon: const Icon(Icons.storefront_outlined),
+                      onPressed: () => onOpenCatalog?.call(),
+                      icon: const Icon(Icons.storefront_outlined, size: 20),
                       label: Text(
                         'Перейти в каталог',
                         style: textTheme.labelLarge,
                       ),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppColors.deepBlue,
-                        side: const BorderSide(color: AppColors.deepBlue),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
+                        side: BorderSide(
+                          color: AppColors.deepBlue.withValues(alpha: .9),
+                          width: 1.4,
                         ),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(14),
                         ),
+                        backgroundColor: Colors.transparent,
                       ),
                     ),
                   ),
@@ -273,7 +272,7 @@ class _HeroLine extends StatelessWidget {
           fontWeight: FontWeight.w900,
           height: 1.15,
           letterSpacing: .2,
-          color:cs.onPrimary,
+          color: cs.onPrimary,
           shadows: const [
             Shadow(blurRadius: 8, color: Colors.black54, offset: Offset(0, 2)),
           ],
@@ -289,7 +288,6 @@ class _SurfaceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Container(
@@ -400,10 +398,7 @@ class _AdvCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  adv.title,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
+                Text(adv.title, style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(height: 6),
                 Text(
                   adv.text,
@@ -479,9 +474,6 @@ class _SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: Theme.of(context).textTheme.titleMedium,
-    );
+    return Text(text, style: Theme.of(context).textTheme.titleMedium);
   }
 }

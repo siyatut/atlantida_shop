@@ -59,7 +59,7 @@ class _RootTabsState extends State<_RootTabs> {
     _pages = [
       HomeScreen(onOpenCatalog: () => setState(() => _index = 1)),
       const CatalogScreen(),
-      const AboutScreen(),
+      AboutScreen(onOpenCatalog: () => setState(() => _index = 1)),
       const ContactsScreen(),
     ];
   }
