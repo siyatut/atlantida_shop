@@ -18,8 +18,9 @@ class AboutScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     final heroTitle = fixPrepositions(
-      'Не откладывайте заботу о вашем питомце на потом!',
+      'Не откладывайте заботу \nо вашем питомце на потом!',
     );
+
     final heroSubtitle = fixPrepositions(
       'Посетите зоомагазин «Атлантида» в Нижнем Новгороде — у нас есть всё для здоровья и комфорта вашего любимца. '
       'Качественные товары, честные цены и помощь консультантов.',
@@ -28,9 +29,9 @@ class AboutScreen extends StatelessWidget {
     final aboutIntro = const _AboutSection(
       'Широкий ассортимент товаров для вашего питомца',
       [
-        'Зоотовары «Атлантида» в Нижнем Новгороде — ваш лучший выбор для заботы о питомце.',
-        'Мы подбираем корма, оборудование и аксессуары для питомцев разных видов: от рыбок и птиц до собак и кошек.',
-        'Нам важно, чтобы вашему любимцу было комфортно и безопасно, поэтому мы выбираем проверенных производителей.',
+        'Зоомагазин «Атлантида» в Нижнем Новгороде — ваш лучший выбор для заботы о питомце.',
+        'Более 11 лет подбираем корма, оборудование и аксессуары для животных разных видов: от рыбок и птиц до собак и кошек.',
+        'Нам важно, чтобы вашему любимцу было комфортно и безопасно, поэтому мы сотрудничаем только с проверенными годами производителями.',
       ],
     );
 
@@ -38,7 +39,7 @@ class AboutScreen extends StatelessWidget {
       'Широкий ассортимент товаров для разных видов питомцев',
       'Качественные товары от известных производителей',
       'Консультации профессионалов по выбору товаров и уходу',
-      'Доступные цены и регулярные акции и скидки',
+      'Честные и доступные цены',
     ];
 
     return SafeArea(
@@ -50,9 +51,7 @@ class AboutScreen extends StatelessWidget {
           const SliverToBoxAdapter(child: gap12),
 
           // 1) О магазине + ассортимент (коротко)
-          SliverToBoxAdapter(
-            child: _buildTextSection(context, aboutIntro),
-          ),
+          SliverToBoxAdapter(child: _buildTextSection(context, aboutIntro)),
           const SliverToBoxAdapter(child: gap12),
 
           // 2) Преимущества магазина
@@ -61,18 +60,14 @@ class AboutScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _SectionTitle(
-                    splitTitleInTwo(
-                      fixPrepositions('Почему выбирают «Атлантиду»?'),
-                    ),
-                  ),
+                  const _SectionTitle('Почему выбирают «Атлантиду»'),
                   gap12,
                   _Bullets(items: whyUsBullets),
                   gap12,
                   Text(
                     fixPrepositions(
                       'Мы стремимся сделать заботу о питомце проще: '
-                      'помогаем с выбором, советуем по уходу и предлагаем товары на каждый день.',
+                      'помогаем с выбором, советуем правильный уход и предлагаем необходимые товары.',
                     ),
                     style: textTheme.bodyMedium?.copyWith(
                       color: cs.onSurface.withValues(alpha: .85),
@@ -95,7 +90,7 @@ class AboutScreen extends StatelessWidget {
                     text: 'Аксессуары и аквариумы',
                   ),
                   _Feature(
-                    icon: Icons.pets_outlined,
+                    icon: Icons.grass_outlined,
                     text: 'В продаже живые рыбки и растения',
                   ),
                   _Feature(
@@ -123,13 +118,11 @@ class AboutScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _SectionTitle(
-                    fixPrepositions('Зоотовары для разных питомцев'),
-                  ),
+                  const _SectionTitle('Зоотовары для разных питомцев'),
                   gap8,
                   _AccordionItem(
                     title: fixPrepositions(
-                      'Товары для всех видов домашних животных',
+                      'Разнообразие товаров для ваших любимцев',
                     ),
                     text: fixPrepositions(
                       'Товары для всех видов домашних животных, включая собак, кошек, грызунов, птиц, рептилий и рыбок. '
@@ -139,23 +132,24 @@ class AboutScreen extends StatelessWidget {
                   _AccordionItem(
                     title: fixPrepositions('Аквариумы и оборудование'),
                     text: fixPrepositions(
-                      'Если вы любите аквариумных рыбок, у нас есть всё для создания прекрасного подводного мира: '
-                      'аквариумы разных размеров и форм, насосы, фильтры, нагреватели и освещение.',
+                      'Если любите аквариумных рыбок, в нашем магазине вы найдёте всё для создания прекрасного подводного мира: '
+                      'аквариумы разных форм и размеров, фильтры, нагреватели, освещение и украшения.',
                     ),
                   ),
                   _AccordionItem(
                     title: fixPrepositions('Корма для животных'),
                     text: fixPrepositions(
                       'Правильное питание — ключ к здоровью питомца. '
-                      'У нас вы найдёте корма для собак и кошек разных пород и возрастов, '
-                      'а также для грызунов, птиц, рептилий и рыбок.',
+                      'В «Атлантиде» большой выбор кормов для аквариумных рыбок: на каждый день, для роста и окраса. '
+                      'Также у нас есть корма для собак и кошек разных пород и возрастов, '
+                      'а ещё для грызунов, птиц и рептилий.',
                     ),
                   ),
                   _AccordionItem(
                     title: fixPrepositions('Сопутствующие товары'),
                     text: fixPrepositions(
                       'Наполнители, миски, поводки, игрушки и многое другое. '
-                      'Мы поможем подобрать всё необходимое, чтобы жизнь вашего питомца была удобной и интересной.',
+                      'Мы поможем подобрать всё необходимое, чтобы жизнь вашего питомца была удобной и интересной для вас обоих.',
                     ),
                   ),
                 ],
@@ -174,7 +168,7 @@ class AboutScreen extends StatelessWidget {
                   gap8,
                   Text(
                     fixPrepositions(
-                      'Откройте каталог и выберите всё нужное для вашего любимца.',
+                      'Перейдите в каталог и выберите всё нужное для вашего любимца.',
                     ),
                     style: textTheme.bodyMedium?.copyWith(
                       color: cs.onSurface.withValues(alpha: .85),

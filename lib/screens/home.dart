@@ -172,12 +172,12 @@ class HomeScreen extends StatelessWidget {
                         text: 'Клиентоориентированный подход',
                       ),
                       _Feature(
-                        icon: Icons.attach_money,
-                        text: 'Доступные цены',
+                        icon: Icons.grass_outlined,
+                        text: 'Живые рыбки и растения',
                       ),
                       _Feature(
-                        icon: Icons.grass_outlined,
-                        text: 'Живые рыбки и растения для аквариумов',
+                        icon: Icons.attach_money,
+                        text: 'Доступные цены',
                       ),
                     ],
                   ),
