@@ -83,7 +83,23 @@ class _RootTabsState extends State<_RootTabs> {
             _ => 'Контакты',
           }),
         ),
-        body: IndexedStack(index: _index, children: _pages),
+        body: Stack(
+          children: List.generate(_pages.length, (i) {
+            final selected = i == _index;
+
+            return AnimatedSlide(
+              duration: const Duration(milliseconds: 230),
+              curve: Curves.easeOutCubic,
+              offset: selected ? Offset.zero : const Offset(0.018, 0),
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 170),
+                curve: Curves.easeOut,
+                opacity: selected ? 1 : 0,
+                child: IgnorePointer(ignoring: !selected, child: _pages[i]),
+              ),
+            );
+          }),
+        ),
         bottomNavigationBar: SafeArea(
           top: false,
           child: NavigationBar(
