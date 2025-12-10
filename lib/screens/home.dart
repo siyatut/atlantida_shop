@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
 import '../utils/launcher_utils.dart';
+import '../utils/tab_scroll_padding.dart';
 import '../widgets/yellow_button.dart';
 import '../utils/spacing.dart';
 import '../core/app_contacts.dart';
@@ -20,6 +21,7 @@ class HomeScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return SafeArea(
+      bottom: false,
       child: CustomScrollView(
         slivers: [
           const SliverToBoxAdapter(child: _HeroBannerLarge()),
@@ -185,8 +187,9 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SliverToBoxAdapter(child: gap16),
-          const SliverToBoxAdapter(child: SizedBox(height: 24)),
+          SliverToBoxAdapter(
+            child: SizedBox(height: tabScrollPadding(context).bottom),
+          ),
         ],
       ),
     );

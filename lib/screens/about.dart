@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../core/app_contacts.dart';
 import '../theme/app_colors.dart';
 import '../utils/launcher_utils.dart';
+import '../utils/tab_scroll_padding.dart';
 import '../utils/spacing.dart';
 import '../utils/text_utils.dart';
 import '../widgets/yellow_button.dart';
@@ -43,6 +44,7 @@ class AboutScreen extends StatelessWidget {
     ];
 
     return SafeArea(
+      bottom: false,
       child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -232,8 +234,9 @@ class AboutScreen extends StatelessWidget {
               ),
             ),
           ),
-
-          const SliverToBoxAdapter(child: gap24),
+          SliverToBoxAdapter(
+            child: SizedBox(height: tabScrollPadding(context).bottom),
+          ),
         ],
       ),
     );

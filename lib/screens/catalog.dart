@@ -6,6 +6,7 @@ import '../domain/product.dart';
 import '../theme/app_colors.dart';
 import '../widgets/product_image_box.dart';
 import '../widgets/yellow_button.dart';
+import '../utils/tab_scroll_padding.dart';
 import 'product_details.dart';
 
 class CatalogScreen extends StatefulWidget {
@@ -180,7 +181,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                 onRefresh: () => _load(reset: true),
 
                 child: ListView.separated(
-                  padding: const EdgeInsets.all(16),
+                  padding: tabScrollPadding(context),
                   itemBuilder: (_, i) {
                     // последний элемент — футер «Показать ещё»
                     if (i == products.length) {
