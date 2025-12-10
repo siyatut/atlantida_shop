@@ -20,12 +20,20 @@ class WooRepository {
         .map((e) => Product.fromWooJson(e as Map<String, dynamic>))
         .toList();
   }
-
-  Future<List<WooCategory>> categories({int perPage = 100}) async {
+  
+  Future<List<WooCategory>> topCategories({int perPage = 100}) async {
     final raw = await client.getCategories(perPage: perPage);
-    final list = raw.map((e) => WooCategory.fromJson(e as Map<String, dynamic>)).toList();
-    // Возьму верхний уровень
+    final list = raw
+        .map((e) => WooCategory.fromJson(e as Map<String, dynamic>))
+        .toList();
     return list.where((c) => c.parent == 0).toList();
   }
 
+  Future<List<WooCategory>> allCategories({int perPage = 100}) async {
+    final raw = await client.getCategories(perPage: perPage);
+    return raw
+        .map((e) => WooCategory.fromJson(e as Map<String, dynamic>))
+        .toList();
+  }
 }
+

@@ -12,20 +12,25 @@ import 'product_details.dart';
 class CatalogScreen extends StatefulWidget {
   const CatalogScreen({super.key, this.initialFilter});
   final String? initialFilter;
+
   @override
   State<CatalogScreen> createState() => _CatalogScreenState();
 }
 
 class _CatalogScreenState extends State<CatalogScreen> {
-  String? _activeFilter;
+  String? _activeFilter; // slug верхней категории
+  WooCategory? _activeSubcat; // активная подкатегория
+
   final _repo = WooRepository();
   bool _loading = true;
   bool _loadingMore = false;
   String? _error;
-  List<Product> _items = const [];
 
+  List<Product> _items = const [];
   List<WooCategory> _cats = const [];
-  final Map<String, int> _slugToId = {}; // slug -> id
+  List<WooCategory> _allCats = const [];
+
+  final Map<String, int> _slugToId = {};
 
   int _page = 1;
   static const int _perPage = 40;
@@ -48,41 +53,56 @@ class _CatalogScreenState extends State<CatalogScreen> {
         _activeFilter = firstSlug;
       }
     }
+
+    _selectFirstSubcatForActiveFilter();
     await _load(reset: true);
   }
+
+  void _selectFirstSubcatForActiveFilter() {
+  final parentId =
+      _activeFilter == null ? null : _slugToId[_activeFilter!];
+  if (parentId == null) {
+    _activeSubcat = null;
+    return;
+  }
+  final subs = _allCats.where((c) => c.parent == parentId).toList();
+  _activeSubcat = subs.isNotEmpty ? subs.first : null;
+}
 
   String? _findFirstAvailableSlug() {
     final desiredOrder = ['rybki', 'gryzuny', 'koshki', 'sobaki'];
     for (final slug in desiredOrder) {
-      if (_slugToId.containsKey(slug)) {
-        return slug;
-      }
+      if (_slugToId.containsKey(slug)) return slug;
     }
     return null;
   }
 
   Future<void> _loadCategories() async {
     try {
-      final cats = await _repo.categories();
-      _slugToId.clear();
-      final List<WooCategory> filtered = [];
+      final all = await _repo.allCategories();
+      _allCats = all;
 
-      for (final c in cats) {
+      _slugToId.clear();
+      final List<WooCategory> filteredTop = [];
+
+      for (final c in all) {
         final slug = c.slug.toLowerCase();
         if ([
-          'rybki',
-          'gryzuny',
-          'koshki',
-          'sobaki',
-          'pticzy',
-          'reptilii',
-        ].contains(slug)) {
-          filtered.add(c);
+              'rybki',
+              'gryzuny',
+              'koshki',
+              'sobaki',
+              'pticzy',
+              'reptilii',
+            ].contains(slug) &&
+            c.parent == 0) {
+          filteredTop.add(c);
           _slugToId[slug] = c.id;
         }
       }
+
       if (!mounted) return;
-      setState(() => _cats = filtered);
+      setState(() => _cats = filteredTop);
     } catch (e) {
       // ignore: avoid_print
       print('Failed to load categories: $e');
@@ -102,13 +122,15 @@ class _CatalogScreenState extends State<CatalogScreen> {
       if (!_hasMore || _loadingMore) return;
       setState(() => _loadingMore = true);
     }
+
     try {
-      final id = _activeFilter == null ? null : _slugToId[_activeFilter!];
+      final id = _activeSubcat?.id;
       final data = await _repo.products(
         page: _page,
         perPage: _perPage,
         categoryId: id,
       );
+
       setState(() {
         _items = [..._items, ...data];
         _hasMore = data.length == _perPage;
@@ -118,11 +140,13 @@ class _CatalogScreenState extends State<CatalogScreen> {
       setState(() => _error = e.toString());
     } finally {
       if (mounted) {
-        if (reset) {
-          setState(() => _loading = false);
-        } else {
-          setState(() => _loadingMore = false);
-        }
+        setState(() {
+          if (reset) {
+            _loading = false;
+          } else {
+            _loadingMore = false;
+          }
+        });
       }
     }
   }
@@ -133,18 +157,69 @@ class _CatalogScreenState extends State<CatalogScreen> {
     final textTheme = Theme.of(context).textTheme;
     final cs = Theme.of(context).colorScheme;
 
+    final parentId = _activeFilter == null ? null : _slugToId[_activeFilter!];
+
+    final subcats = parentId == null
+        ? const <WooCategory>[]
+        : _allCats.where((c) => c.parent == parentId).toList();
+
     return Column(
       children: [
         _DynamicFilters(
           categories: _cats,
           activeSlug: _activeFilter,
           onSelect: (slug) {
-            setState(() => _activeFilter = slug);
-            _load(reset: true); // смена фильтра — сброс и новая загрузка
+            setState(() {
+              _activeFilter = slug;
+              _selectFirstSubcatForActiveFilter();
+            });
+            _load(reset: true);
           },
         ),
+
+        if (subcats.isNotEmpty)
+          SizedBox(
+            height: 44,
+            child: ListView.separated(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+              scrollDirection: Axis.horizontal,
+              itemCount: subcats.length,
+              separatorBuilder: (_, __) => const SizedBox(width: 8),
+              itemBuilder: (_, i) {
+                final sc = subcats[i];
+                final selected = _activeSubcat?.id == sc.id;
+
+                return ChoiceChip(
+                  selected: selected,
+                  showCheckmark: false,
+                  onSelected: (_) {
+                    setState(() => _activeSubcat = sc);
+                    _load(reset: true);
+                  },
+                  label: Text(sc.name),
+                  labelStyle: textTheme.labelLarge?.copyWith(
+                    color: selected ? AppColors.white : AppColors.deepBlue,
+                  ),
+                  selectedColor: AppColors.teal,
+                  backgroundColor: cs.surface.withValues(alpha: .95),
+                  side: BorderSide(
+                    color: selected ? AppColors.teal : Colors.transparent,
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 8,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                );
+              },
+            ),
+          ),
+
         if (_loading)
           const Expanded(child: Center(child: CircularProgressIndicator())),
+
         if (!_loading && _error != null)
           Expanded(
             child: Center(
@@ -172,6 +247,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
               ),
             ),
           ),
+
         if (!_loading && _error == null)
           Expanded(
             child: SafeArea(
@@ -179,11 +255,9 @@ class _CatalogScreenState extends State<CatalogScreen> {
               bottom: false,
               child: RefreshIndicator(
                 onRefresh: () => _load(reset: true),
-
                 child: ListView.separated(
                   padding: tabScrollPadding(context),
                   itemBuilder: (_, i) {
-                    // последний элемент — футер «Показать ещё»
                     if (i == products.length) {
                       return _LoadMoreFooter(
                         visible: _hasMore,
@@ -191,6 +265,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                         onTap: () => _load(),
                       );
                     }
+
                     final item = products[i];
                     return _Card(
                       child: Row(
@@ -204,8 +279,6 @@ class _CatalogScreenState extends State<CatalogScreen> {
                               children: [
                                 Text(
                                   item.title,
-                                  // maxLines: 2,
-                                  //  overflow: TextOverflow.ellipsis,
                                   style: textTheme.titleMedium?.copyWith(
                                     color: cs.onSurface,
                                   ),
@@ -235,7 +308,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                   separatorBuilder: (_, i) => i < products.length - 1
                       ? const SizedBox(height: 12)
                       : const SizedBox.shrink(),
-                  itemCount: products.length + 1, // +1 под футер
+                  itemCount: products.length + 1,
                 ),
               ),
             ),
@@ -340,6 +413,7 @@ class _Card extends StatelessWidget {
 class _ProductImage extends StatelessWidget {
   const _ProductImage({this.url});
   final String? url;
+
   @override
   Widget build(BuildContext context) {
     return ProductImageBox(imageUrl: url, borderRadius: 12);
@@ -353,8 +427,8 @@ class _PriceText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final base = Theme.of(context).textTheme.bodyMedium;
-
     final hasPrice = price != null && price!.isNotEmpty;
+
     return Text(
       hasPrice ? '$price руб.' : 'Цена по запросу',
       style: base?.copyWith(
