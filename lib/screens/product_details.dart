@@ -92,39 +92,86 @@ class ProductDetailsScreen extends StatelessWidget {
     );
   }
 
-  String _cleanDescription(String? html) {
-    if (html == null) return '';
+    String _cleanDescription(String? html) {
+    if (html == null || html.isEmpty) return '';
+
     var text = html;
 
+    // Простые замены br → перенос строки
     text = text
         .replaceAll('<br />', '\n')
         .replaceAll('<br/>', '\n')
         .replaceAll('<br>', '\n');
 
-    text = text
-        .replaceAll(RegExp(r'</p\s*>', caseSensitive: false), '\n\n')
-        .replaceAll(RegExp(r'<p[^>]*>', caseSensitive: false), '');
+    final buffer = StringBuffer();
+    var i = 0;
+    var consecutiveNewlines = 0;
 
-    text = text
-        .replaceAll(RegExp(r'<li[^>]*>', caseSensitive: false), '• ')
-        .replaceAll(RegExp(r'</li\s*>', caseSensitive: false), '\n');
+    void writeWithNewlineCollapse(String s) {
+      for (final codeUnit in s.codeUnits) {
+        final ch = String.fromCharCode(codeUnit);
+        if (ch == '\n') {
+          if (consecutiveNewlines < 2) {
+            buffer.write(ch);
+          }
+          consecutiveNewlines++;
+        } else {
+          consecutiveNewlines = 0;
+          buffer.write(ch);
+        }
+      }
+    }
 
-    text = text.replaceAll(
-      RegExp(r'</?(ul|ol)[^>]*>', caseSensitive: false),
-      '',
-    );
+    while (i < text.length) {
+      final ch = text[i];
 
-    text = text.replaceAll(RegExp(r'<[^>]+>'), '');
+      if (ch == '<') {
+        final close = text.indexOf('>', i + 1);
+        if (close == -1) {
+          // странный HTML, просто дописываем остаток
+          writeWithNewlineCollapse(text.substring(i));
+          break;
+        }
 
-    text = text
+        final rawTag = text.substring(i + 1, close).trim();
+        final tag = rawTag.toLowerCase();
+
+        if (tag.startsWith('/p')) {
+          writeWithNewlineCollapse('\n\n');
+        } else if (tag.startsWith('p')) {
+          // <p ...> — ничего не пишем, просто разделитель
+        } else if (tag.startsWith('li')) {
+          writeWithNewlineCollapse('• ');
+        } else if (tag.startsWith('/li')) {
+          writeWithNewlineCollapse('\n');
+        } else if (tag.startsWith('ul') ||
+            tag.startsWith('/ul') ||
+            tag.startsWith('ol') ||
+            tag.startsWith('/ol')) {
+          // list-теги игнорируем
+        } else {
+          // остальные теги просто срезаем
+        }
+
+        i = close + 1;
+      } else {
+        final nextTag = text.indexOf('<', i);
+        final end = nextTag == -1 ? text.length : nextTag;
+        writeWithNewlineCollapse(text.substring(i, end));
+        i = end;
+      }
+    }
+
+    var result = buffer.toString();
+
+    // HTML-сущности
+    result = result
         .replaceAll('&nbsp;', ' ')
         .replaceAll('&amp;', '&')
         .replaceAll('&quot;', '"')
         .replaceAll('&#39;', "'");
 
-    text = text.replaceAll(RegExp(r'\n{3,}'), '\n\n');
-
-    return text.trim();
+    return result.trim();
   }
 }
 

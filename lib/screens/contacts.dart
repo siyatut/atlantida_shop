@@ -5,6 +5,7 @@ import '../theme/app_colors.dart';
 import '../widgets/yellow_button.dart';
 import '../utils/launcher_utils.dart';
 import '../utils/spacing.dart';
+import '../utils/tab_scroll_padding.dart';
 
 class ContactsScreen extends StatelessWidget {
   const ContactsScreen({super.key});
@@ -49,7 +50,7 @@ class ContactsScreen extends StatelessWidget {
         slivers: [
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
+              padding: const EdgeInsets.fromLTRB(16, 18, 16, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -193,6 +194,9 @@ class ContactsScreen extends StatelessWidget {
               ),
             ),
           ),
+          SliverToBoxAdapter(
+            child: SizedBox(height: tabScrollPadding(context).bottom),
+          ),
         ],
       ),
     );
@@ -211,11 +215,7 @@ class _ContactItem {
 }
 
 class _PhoneRow extends StatelessWidget {
-  const _PhoneRow({
-    required this.label,
-    required this.onTap,
-    this.subtitle,
-  });
+  const _PhoneRow({required this.label, required this.onTap, this.subtitle});
 
   final String label;
   final String? subtitle;
@@ -282,20 +282,16 @@ class _PhoneRow extends StatelessWidget {
 }
 
 class _SurfaceCard extends StatelessWidget {
-  const _SurfaceCard({
-    required this.child,
-    this.padding = const EdgeInsets.all(16),
-  });
+  const _SurfaceCard({required this.child});
 
   final Widget child;
-  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     return Container(
       width: double.infinity,
-      padding: padding,
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: cs.surface.withValues(alpha: .9),
         borderRadius: BorderRadius.circular(18),

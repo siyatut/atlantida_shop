@@ -1,25 +1,27 @@
-
 String splitTitleInTwo(String title) {
-  final t = title.trim().replaceAll(RegExp(r'\s+'), ' ');
+  final t = _normalizeSpaces(title);
   final words = t.split(' ');
   if (words.length <= 1) return t;
 
-  const maxWordLen = 18; 
+  const maxWordLen = 18;
   if (words.any((w) => w.length >= maxWordLen)) {
-    return t; // не делим, оставляем одной строкой
+    // не делим, если есть очень длинное слово
+    return t;
   }
 
   final totalLen = t.length;
-  int bestIndex = 1;
-  double bestDiff = double.infinity;
+  var bestIndex = 1;
+  var bestDiff = totalLen.toDouble();
 
-  for (int i = 1; i < words.length; i++) {
-    final left = words.sublist(0, i).join(' ');
-    final diff = (totalLen / 2 - left.length).abs(); // diff = double
+  var leftLen = words.first.length;
+  for (var i = 1; i < words.length; i++) {
+    final diff = (totalLen / 2 - leftLen).abs();
     if (diff < bestDiff) {
       bestDiff = diff;
       bestIndex = i;
     }
+    // +1 за пробел между словами
+    leftLen += 1 + words[i].length;
   }
 
   final line1 = words.sublist(0, bestIndex).join(' ');
@@ -27,20 +29,73 @@ String splitTitleInTwo(String title) {
   return '$line1\n$line2';
 }
 
+String _normalizeSpaces(String value) {
+  final buffer = StringBuffer();
+  var sawSpace = false;
+
+  for (final codeUnit in value.codeUnits) {
+    final ch = String.fromCharCode(codeUnit);
+    final isSpace = ch.trim().isEmpty;
+
+    if (isSpace) {
+      if (!sawSpace) {
+        buffer.write(' ');
+        sawSpace = true;
+      }
+    } else {
+      buffer.write(ch);
+      sawSpace = false;
+    }
+  }
+
+  return buffer.toString().trim();
+}
+
 String fixPrepositions(String text) {
-  final preps = [
+  if (text.isEmpty) return text;
+
+  const preps = [
     'в','к','с','у','о','а','я','и','но','на','по','за','из','от','до',
-    'без','при','над','под','про','для','об','обо','со','ко','во'
+    'без','при','над','под','про','для','об','обо','со','ко','во',
   ];
 
-  final pattern = RegExp(
-    r'(^|[\s\n])(' + preps.join('|') + r')\s+(?=\S)',
-    caseSensitive: false,
-  );
+  bool isWhitespace(String ch) => ch.trim().isEmpty;
+  final prepsSet = preps.toSet();
+  final result = StringBuffer();
 
-  return text.replaceAllMapped(pattern, (m) {
-    final leftSpace = m.group(1)!;   // пробел/начало строки
-    final prep = m.group(2)!;        // сам предлог
-    return '$leftSpace$prep\u00A0';  // NBSP после предлога
-  });
+  var i = 0;
+  while (i < text.length) {
+    final ch = text[i];
+
+    // Копируем все пробелы/переводы строк как есть
+    if (isWhitespace(ch)) {
+      result.write(ch);
+      i++;
+      continue;
+    }
+
+    // Читаем слово до следующего пробельного символа
+    final start = i;
+    while (i < text.length && !isWhitespace(text[i])) {
+      i++;
+    }
+    final word = text.substring(start, i);
+    final lower = word.toLowerCase();
+
+    // Если это короткий предлог, за которым идёт ОДИН обычный пробел
+    // и дальше не пробел/перевод строки — заменяем пробел на NBSP
+    if (prepsSet.contains(lower) &&
+        i < text.length &&
+        text[i] == ' ' &&
+        i + 1 < text.length &&
+        !isWhitespace(text[i + 1])) {
+      result.write(word);
+      result.write('\u00A0'); // неразрывный пробел
+      i++; // пропускаем тот самый обычный пробел
+    } else {
+      result.write(word);
+    }
+  }
+
+  return result.toString();
 }
