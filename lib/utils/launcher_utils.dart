@@ -30,6 +30,14 @@ Future<void> sendEmail({
   }
 }
 
+Future<void> openUrl(String url) async {
+  final uri = Uri.parse(url);
+  await launchUrl(
+    uri,
+    mode: LaunchMode.externalApplication,
+  );
+}
+
 String? _encodeQueryParameters(Map<String, String> params) {
   return params.entries
       .map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
