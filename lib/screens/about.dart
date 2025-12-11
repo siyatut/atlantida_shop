@@ -306,11 +306,7 @@ class _HeroCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w900,
-                color: cs.onSurface,
-                height: 1.2,
-              ),
+              style: textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
             Text(
