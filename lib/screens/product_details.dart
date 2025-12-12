@@ -201,7 +201,10 @@ class _ContactCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Уточнить подробности в магазине', style: textTheme.titleMedium),
+          Text(
+            fixPrepositions('Уточнить подробности в магазине'), 
+            style: textTheme.titleMedium
+            ),
           const SizedBox(height: 8),
           Text(
             'Расскажите о вашем запросе, мы обязательно поможем сориентироваться',
