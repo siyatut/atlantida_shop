@@ -32,7 +32,7 @@ class ContactsScreen extends StatelessWidget {
 
   static const _addressTitle = 'Нижний Новгород, Коминтерна, 117';
   static const _addressSubtitle =
-      'Универмаг «Сормовские Зори», 1 этаж,\nлевое крыло — за аптекой.';
+      'Универмаг «Сормовские Зори», 1 этаж, левое крыло — за аптекой.';
 
   // Ссылки для открытия маршрута
   static const _yandexRouteUrl =
