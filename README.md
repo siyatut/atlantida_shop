@@ -1,16 +1,50 @@
-# atlantida_shop
+# Atlantida
 
-A new Flutter project.
+## 📝 Description
 
-## Getting Started
+**Atlantida** is a mobile application for a local pet shop in Nizhny Novgorod. The app helps customers explore products, browse categories, read detailed product descriptions, and quickly contact the store or build a route using external map services. The project focuses on a clean UI, clear navigation, and real-world usability for a small business. It is built with Flutter and structured to be easy to extend and maintain.
 
-This project is a starting point for a Flutter application.
+## 🎥 Preview
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🚀 Key Features
+
+- Product catalog with categories and subcategories
+- Product details screen with formatted descriptions
+- Contact screen with:
+  - One-tap phone calls
+  - Telegram and email links
+  - Quick route opening in Yandex Maps and Google Maps
+- About screen with structured content and expandable sections
+- Unified paddings and spacing across all screens
+- Optimized text layout (line splitting, non-breaking spaces for prepositions)
+
+## 🛠 Technologies
+
+- **Flutter / Dart**
+- Material UI
+- REST API integration (WooCommerce)
+- URL Launcher (phone, email, external links)
+- Custom UI components and helpers
+- Clean widget-based structure (presentation / domain / data separation)
+- Git-based environment configuration (API keys are not committed)
+
+## 🧱 Architecture
+
+The project follows a simple layered structure:
+
+- **data** — API clients, repositories, DTOs
+- **domain** — business models
+- **screens** — UI screens
+- **widgets** — reusable UI components
+- **utils** — helpers for spacing, text processing, launchers
+
+This approach keeps UI logic readable while allowing the project to grow without overengineering.
+
+## 🔮 Future Improvements
+
+- Search and filtering in the catalog
+- Favorites / saved products
+- Improved product image gallery
+- Admin-driven content updates from the website
