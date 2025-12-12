@@ -6,6 +6,7 @@ import '../widgets/yellow_button.dart';
 import '../utils/launcher_utils.dart';
 import '../utils/spacing.dart';
 import '../utils/tab_scroll_padding.dart';
+import '../utils/text_utils.dart';
 
 class ContactsScreen extends StatelessWidget {
   const ContactsScreen({super.key});
@@ -33,6 +34,9 @@ class ContactsScreen extends StatelessWidget {
   static const _addressTitle = 'Нижний Новгород, Коминтерна, 117';
   static const _addressSubtitle =
       'Универмаг «Сормовские Зори», 1 этаж, левое крыло — за аптекой.';
+
+  String get addressTitleUi => splitTitleInTwo(fixPrepositions(_addressTitle));
+  String get addressSubtitleUi => fixPrepositions(_addressSubtitle);
 
   // Ссылки для открытия маршрута
   static const _yandexRouteUrl =
@@ -134,7 +138,7 @@ class ContactsScreen extends StatelessWidget {
                         ),
                         gap8,
                         Text(
-                          _addressTitle,
+                          addressTitleUi,
                           style: textTheme.bodyLarge?.copyWith(
                             fontWeight: FontWeight.w700,
                             color: cs.onSurface,
@@ -142,7 +146,7 @@ class ContactsScreen extends StatelessWidget {
                         ),
                         gap6,
                         Text(
-                          _addressSubtitle,
+                          addressSubtitleUi,
                           style: textTheme.bodyMedium?.copyWith(
                             color: cs.onSurface.withValues(alpha: .8),
                             height: 1.35,
