@@ -4,11 +4,12 @@
 
 **Atlantida** is a mobile application for a local pet shop in Nizhny Novgorod. The app helps customers explore products, browse categories, read detailed product descriptions, and quickly contact the store or build a route using external map services. The project focuses on a clean UI, clear navigation, and real-world usability for a small business. It is built with Flutter and structured to be easy to extend and maintain.
 
-## 🎥 Preview
+## 📱 Screenshots
 
-Please note: The GIF may take a few seconds to load, depending on your connection. Thank you for your patience!
+Below are static screenshots highlighting the main screens and overall layout of the app.
+Animated previews are placed further down due to file size limitations.
 
-![Demo 1](assets/demo1.gif) ![Demo 2](assets/demo2.gif)
+![image](https://github.com/user-attachments/assets/c9b97488-3f5a-41af-a224-40b7700c0467)
 
 ## 🚀 Key Features
 
@@ -50,3 +51,13 @@ This approach keeps UI logic readable while allowing the project to grow without
 - Favorites / saved products
 - Improved product image gallery
 - Admin-driven content updates from the website
+
+## 🎥 Animated Preview
+
+Animated walkthroughs demonstrating navigation and interactions within the app.
+GIFs are placed separately to reduce initial load time and preserve quality.
+
+Please note: The GIF may take a few seconds to load, depending on your connection. Thank you for your patience!
+
+![Demo 1](assets/demo1.gif) ![Demo 2](assets/demo2.gif)
+
