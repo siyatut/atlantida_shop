@@ -6,6 +6,8 @@
 
 ## 🎥 Preview
 
+Please note: The GIF may take a few seconds to load, depending on your connection. Thank you for your patience!
+
 ![Demo 1](assets/demo1.gif) ![Demo 2](assets/demo2.gif)
 
 ## 🚀 Key Features
