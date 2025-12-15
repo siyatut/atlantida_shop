@@ -6,7 +6,7 @@
 
 ## 🎥 Preview
 
-
+![Demo 1](assets/demo1.gif) ![Demo 2](assets/demo2.gif)
 
 ## 🚀 Key Features
 
