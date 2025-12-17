@@ -1,6 +1,8 @@
+// lib/data/woo/woo_repository.dart
 import '../../domain/product.dart';
 import 'woo_client.dart';
-import 'woo_models.dart';
+import 'woo_dto.dart';
+import 'woo_mappers.dart';
 
 class WooRepository {
   final WooClient client;
@@ -17,10 +19,10 @@ class WooRepository {
       categoryId: categoryId,
     );
     return raw
-        .map((e) => Product.fromWooJson(e as Map<String, dynamic>))
+        .map((e) => productFromWooJson(e as Map<String, dynamic>))
         .toList();
   }
-  
+
   Future<List<WooCategory>> topCategories({int perPage = 100}) async {
     final raw = await client.getCategories(perPage: perPage);
     final list = raw
@@ -36,4 +38,3 @@ class WooRepository {
         .toList();
   }
 }
-

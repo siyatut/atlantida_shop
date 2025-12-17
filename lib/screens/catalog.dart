@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data/woo/woo_models.dart';
+import '../data/woo/woo_dto.dart';
 import '../data/woo/woo_repository.dart';
 import '../domain/product.dart';
 import '../theme/app_colors.dart';

@@ -2,6 +2,7 @@ import 'package:flutter/services.dart' show rootBundle;
 
 class Env {
   static final Map<String, String> _values = {};
+  static bool _loaded = false;
 
   static Future<void> load([String path = 'assets/env/.env']) async {
     final raw = await rootBundle.loadString(path);
@@ -14,8 +15,11 @@ class Env {
       final value = trimmed.substring(idx + 1).trim();
       _values[key] = value;
     }
+    _loaded = true;
   }
 
   static String get(String key, {String defaultValue = ''}) =>
       _values[key] ?? defaultValue;
+
+  static bool get isLoaded => _loaded;
 }

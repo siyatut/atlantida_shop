@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../core/app_contacts.dart';
+import '../core/constants/app_contacts.dart';
 import '../theme/app_colors.dart';
 import '../widgets/yellow_button.dart';
 import '../utils/launcher_utils.dart';

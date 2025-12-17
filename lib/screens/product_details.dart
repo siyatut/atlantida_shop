@@ -6,7 +6,7 @@ import '../utils/launcher_utils.dart';
 import '../utils/text_utils.dart';
 import '../widgets/yellow_button.dart';
 import '../widgets/product_image_box.dart';
-import '../core/app_contacts.dart';
+import '../core/constants/app_contacts.dart';
 
 Color _cardBg(BuildContext context) =>
     Theme.of(context).colorScheme.surface.withValues(alpha: .95);
