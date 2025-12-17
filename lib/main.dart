@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'screens/about/about_screen.dart';
 import 'screens/catalog/catalog_screen.dart';
 import 'screens/contacts/contacts_screen.dart';
-import 'screens/home.dart';
+import 'screens/home/home_screen.dart';
 import 'theme/app_colors.dart';
 import 'theme/app_theme.dart';
 
