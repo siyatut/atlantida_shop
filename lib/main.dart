@@ -2,7 +2,7 @@ import 'core/env.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/about.dart';
+import 'screens/about/about_screen.dart';
 import 'screens/catalog.dart';
 import 'screens/contacts.dart';
 import 'screens/home.dart';
