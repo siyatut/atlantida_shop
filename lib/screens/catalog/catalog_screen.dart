@@ -4,7 +4,7 @@ import '../../data/woo/woo_dto.dart';
 import '../../data/woo/woo_repository.dart';
 import '../../domain/product.dart';
 import '../../utils/tab_scroll_padding.dart';
-import '../product_details.dart';
+import '../product_details/product_details_screen.dart';
 
 import 'widgets/catalog_filters.dart';
 import 'widgets/catalog_subcategories.dart';
