@@ -15,10 +15,14 @@ class ProductImageBox extends StatelessWidget {
   final Color? backgroundColor;
   final BoxFit fit;
 
+  bool get _hasImage => imageUrl != null && imageUrl!.isNotEmpty;
+
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    final bg = backgroundColor ?? cs.surface; 
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
+
+    final bg = backgroundColor ?? cs.surface;
     final iconColor = cs.onSurface.withValues(alpha: .25);
 
     return AspectRatio(
@@ -29,23 +33,36 @@ class ProductImageBox extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius),
         ),
         clipBehavior: Clip.antiAlias,
-        child: (imageUrl == null || imageUrl!.isEmpty)
-            ? Icon(Icons.image_outlined, size: 48, color: iconColor)
-            : CachedNetworkImage(
+        child: _hasImage
+            ? CachedNetworkImage(
                 imageUrl: imageUrl!,
                 fit: fit,
-                placeholder: (_, __) => Center(
-                  child: SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: CircularProgressIndicator(
-                      color: Theme.of(context).progressIndicatorTheme.color,
-                      strokeWidth: 2),
-                  ),
+                placeholder: (_, __) => _Loader(
+                  color: theme.progressIndicatorTheme.color,
                 ),
                 errorWidget: (_, __, ___) =>
                     Icon(Icons.broken_image_outlined, color: iconColor),
-              ),
+              )
+            : Icon(Icons.image_outlined, size: 48, color: iconColor),
+      ),
+    );
+  }
+}
+
+class _Loader extends StatelessWidget {
+  const _Loader({this.color});
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SizedBox(
+        width: 24,
+        height: 24,
+        child: CircularProgressIndicator(
+          color: color,
+          strokeWidth: 2,
+        ),
       ),
     );
   }
