@@ -2,7 +2,11 @@
 
 ## 📝 Description
 
-**Atlantida** is a mobile application for a local pet shop in Nizhny Novgorod. The app helps customers explore products, browse categories, read detailed product descriptions, and quickly contact the store or build a route using external map services. The project focuses on a clean UI, clear navigation, and real-world usability for a small business. It is built with Flutter and structured to be easy to extend and maintain.
+**Atlantida** is a production-oriented mobile application for a local pet shop in Nizhny Novgorod.
+
+The app allows customers to explore products and categories, view detailed product descriptions, and quickly contact the store or build a route using external map services. It focuses on clean UI, intuitive navigation, and real-world usability for a small business.
+
+The project is built with Flutter and designed with maintainability in mind: UI, domain models, data access, and reusable components are clearly separated. The codebase was incrementally refactored to keep files small, readable, and easy to extend without overengineering.
 
 ## 📱 Screenshots
 
@@ -14,43 +18,49 @@ Animated previews are placed further down due to file size limitations.
 ## 🚀 Key Features
 
 - Product catalog with categories and subcategories
-- Product details screen with formatted descriptions
+- Product details screen with formatted and cleaned HTML descriptions
 - Contact screen with:
   - One-tap phone calls
   - Telegram and email links
   - Quick route opening in Yandex Maps and Google Maps
 - About screen with structured content and expandable sections
 - Unified paddings and spacing across all screens
-- Optimized text layout (line splitting, non-breaking spaces for prepositions)
+- Optimized text layout:
+  - Automatic title line splitting
+  - Non-breaking spaces for short prepositions (Russian typography)
+- Smooth tab navigation with animated transitions
 
 ## 🛠 Technologies
 
 - **Flutter / Dart**
-- Material UI
+- Material 3
 - REST API integration (WooCommerce)
+- Cached network images
 - URL Launcher (phone, email, external links)
-- Custom UI components and helpers
-- Clean widget-based structure (presentation / domain / data separation)
-- Git-based environment configuration (API keys are not committed)
+- Custom reusable widgets and UI helpers
+- Git-based environment configuration (.env, API keys not committed)
 
 ## 🧱 Architecture
 
-The project follows a simple layered structure:
+The project follows a simple, pragmatic layered architecture:
 
-- **data** — API clients, repositories, DTOs
-- **domain** — business models
-- **screens** — UI screens
-- **widgets** — reusable UI components
-- **utils** — helpers for spacing, text processing, launchers
+- core — app configuration and environment loading
+- data — API clients, repositories, DTOs (WooCommerce)
+- domain — business models
+- screens — feature screens, composed of small widgets
+- widgets — reusable UI components
+- utils — spacing, text processing, launchers, and helpers
+- theme — centralized colors, typography, and light/dark themes
 
-This approach keeps UI logic readable while allowing the project to grow without overengineering.
+This structure keeps UI code readable, encourages reuse, and allows the app to grow without introducing unnecessary architectural complexity.
 
 ## 🔮 Future Improvements
 
-- Search and filtering in the catalog
+- Search and advanced filtering in the catalog
 - Favorites / saved products
 - Improved product image gallery
 - Admin-driven content updates from the website
+- Basic analytics and error reporting
 
 ## 🎥 Animated Preview
 
