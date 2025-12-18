@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'app_colors.dart';
 import 'app_typography.dart';
 
@@ -16,16 +17,8 @@ class AppTheme {
       surfaceContainer: AppColors.lightBlue, // светлая голубая подложка
     );
 
-    return ThemeData(
-      useMaterial3: true,
-      colorScheme: cs,
-      textTheme: AppTypography.textTheme(cs),
-      progressIndicatorTheme: const ProgressIndicatorThemeData(
-        color: AppColors.teal,
-      ),
-
-      scaffoldBackgroundColor: Colors.transparent,
-
+    final theme = _baseTheme(
+      cs: cs,
       appBarTheme: const AppBarTheme(
         elevation: 0,
         scrolledUnderElevation: 0,
@@ -40,7 +33,6 @@ class AppTheme {
           color: AppColors.ink,
         ),
       ),
-
       cardTheme: CardThemeData(
         color: AppColors.white,
         elevation: 0,
@@ -48,40 +40,6 @@ class AppTheme {
         surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
-
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.aqua,
-          foregroundColor: Colors.black,
-          elevation: 0,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-          ),
-        ),
-      ),
-
-      filledButtonTheme: FilledButtonThemeData(
-        style: FilledButton.styleFrom(
-          backgroundColor: const Color(0xFFF5BE41),
-          foregroundColor: Colors.black,
-          elevation: 0,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-          ),
-        ),
-      ),
-
-      inputDecorationTheme: InputDecorationTheme(
-        filled: true,
-        fillColor: AppColors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: AppColors.aqua.withValues(alpha: .35)),
-        ),
-      ),
-
       navigationBarTheme: NavigationBarThemeData(
         height: 72,
         elevation: 0,
@@ -107,8 +65,19 @@ class AppTheme {
           ),
         ),
       ),
-
       dividerColor: AppColors.aqua.withValues(alpha: .2),
+    );
+
+    // Уникально для light (как и было)
+    return theme.copyWith(
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: AppColors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(14),
+          borderSide: BorderSide(color: AppColors.aqua.withValues(alpha: .35)),
+        ),
+      ),
     );
   }
 
@@ -123,16 +92,8 @@ class AppTheme {
       onSurface: AppColors.white,
     );
 
-    return ThemeData(
-      useMaterial3: true,
-      colorScheme: cs,
-      textTheme: AppTypography.textTheme(cs),
-      progressIndicatorTheme: const ProgressIndicatorThemeData(
-        color: AppColors.teal,
-      ),
-
-      scaffoldBackgroundColor: Colors.transparent,
-
+    return _baseTheme(
+      cs: cs,
       appBarTheme: const AppBarTheme(
         elevation: 0,
         scrolledUnderElevation: 0,
@@ -147,7 +108,6 @@ class AppTheme {
           color: AppColors.white,
         ),
       ),
-
       cardTheme: CardThemeData(
         color: const Color(0xFF0F1B2D),
         elevation: 0,
@@ -155,6 +115,36 @@ class AppTheme {
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
+      navigationBarTheme: const NavigationBarThemeData(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        indicatorColor: Color(0x3300AEEF),
+      ),
+      dividerColor: Colors.white24,
+    );
+  }
+
+  static ThemeData _baseTheme({
+    required ColorScheme cs,
+    required AppBarTheme appBarTheme,
+    required CardThemeData cardTheme,
+    required NavigationBarThemeData navigationBarTheme,
+    required Color dividerColor,
+  }) {
+    return ThemeData(
+      useMaterial3: true,
+      colorScheme: cs,
+      textTheme: AppTypography.textTheme(cs),
+
+      progressIndicatorTheme: const ProgressIndicatorThemeData(
+        color: AppColors.teal,
+      ),
+
+      scaffoldBackgroundColor: Colors.transparent,
+
+      appBarTheme: appBarTheme,
+
+      cardTheme: cardTheme,
 
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -180,13 +170,9 @@ class AppTheme {
         ),
       ),
 
-      navigationBarTheme: const NavigationBarThemeData(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        indicatorColor: Color(0x3300AEEF),
-      ),
+      navigationBarTheme: navigationBarTheme,
 
-      dividerColor: Colors.white24,
+      dividerColor: dividerColor,
     );
   }
 }
