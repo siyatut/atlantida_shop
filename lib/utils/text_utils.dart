@@ -54,14 +54,7 @@ String _normalizeSpaces(String value) {
 String fixPrepositions(String text) {
   if (text.isEmpty) return text;
 
-  const preps = [
-    'в','к','с','у','о','а','я','и','но','на','по','за','из','от','до',
-    'без','при','над','под','про','об','обо','со','ко','во', 
-    '1', '2', '3', '4', '5', '6', '7', '8', '9',
-  ];
-
   bool isWhitespace(String ch) => ch.trim().isEmpty;
-  final prepsSet = preps.toSet();
   final result = StringBuffer();
 
   var i = 0;
@@ -85,7 +78,7 @@ String fixPrepositions(String text) {
 
     // Если это короткий предлог, за которым идёт ОДИН обычный пробел
     // и дальше не пробел/перевод строки — заменяем пробел на NBSP
-    if (prepsSet.contains(lower) &&
+    if (_prepsSet.contains(lower) &&
         i < text.length &&
         text[i] == ' ' &&
         i + 1 < text.length &&
@@ -100,3 +93,9 @@ String fixPrepositions(String text) {
 
   return result.toString();
 }
+
+final Set<String> _prepsSet = {
+  'в','к','с','у','о','а','я','и','но','на','по','за','из','от','до',
+  'без','при','над','под','про','об','обо','со','ко','во',
+  '1','2','3','4','5','6','7','8','9',
+};
